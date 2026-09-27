@@ -219,6 +219,58 @@ The platform generates analytical insights such as:
 
 ---
 
+## Run the Application
+
+### 1. Create and activate a virtual environment
+
+```powershell
+cd "c:\Users\varsh\OneDrive\Attachments\Desktop\Assignment1_BDM"
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+### 2. Install dependencies
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+### 3. Configure the database connection
+
+Create a `.env` file in the project root and add your Supabase/PostgreSQL connection string:
+
+```env
+DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<database>
+```
+
+### 4. Start the FastAPI backend
+
+From the project root, enter the backend folder and run:
+
+```powershell
+cd backend
+uvicorn app:app --reload
+```
+
+The app should start successfully and run on:
+
+```text
+http://127.0.0.1:8000
+```
+
+### 5. Test the API
+
+Open these in the browser:
+
+```text
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/api
+http://127.0.0.1:8000/api/connection
+http://127.0.0.1:8000/api/business-analysis
+```
+
+---
+
 ## Data Analysis and SQL
 
 The project includes SQL-based analysis using operations such as:
