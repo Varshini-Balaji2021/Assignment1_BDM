@@ -86,108 +86,99 @@ async function testBackendConnection() {
 
 
 // ============================================================
+// DATABASE TABLE HELPER
+// ============================================================
+
+function renderDatabaseTable(container, data, emptyMessage) {
+
+    if (!container) return;
+
+    if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = `<p>${emptyMessage}</p>`;
+        return;
+    }
+
+    const columns = Object.keys(data[0]);
+
+    const table = document.createElement("table");
+    table.className = "data-table";
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+
+    columns.forEach(column => {
+        const th = document.createElement("th");
+        th.textContent = column
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, letter => letter.toUpperCase());
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    data.forEach(record => {
+        const row = document.createElement("tr");
+
+        columns.forEach(column => {
+            const td = document.createElement("td");
+            const value = record[column];
+
+            td.textContent =
+                value === null || value === undefined || value === ""
+                    ? "-"
+                    : value;
+
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrapper";
+    wrapper.appendChild(table);
+
+    container.innerHTML = "";
+    container.appendChild(wrapper);
+}
+
+
+// ============================================================
 // 3. LOAD SURPLUS FOOD
 // ============================================================
 
 async function loadSurplusFood() {
 
-    const container =
-        document.getElementById(
-            "surplus-container"
-        );
+    const container = document.getElementById("surplus-container");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-    container.innerHTML =
-        "<p>Loading surplus food...</p>";
+    container.innerHTML = "<p>Loading surplus food...</p>";
 
     try {
-
-        const response =
-            await fetch("/api/surplus");
-
-        const data =
-            await response.json();
+        const response = await fetch("/api/surplus");
+        const data = await response.json();
 
         if (!response.ok || data.success === false) {
-
-            throw new Error(
-                data.error || "Unable to load surplus food"
-            );
-
+            throw new Error(data.error || "Unable to load surplus food");
         }
 
-        container.innerHTML = "";
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                "<p>No surplus food found.</p>";
-
-            return;
-
-        }
-
-        data.forEach(food => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "card";
-
-            card.innerHTML = `
-
-                <h3>
-                    🍞 ${food["Product Name"] || "Food Item"}
-                </h3>
-
-                <p>
-                    <strong>Bakery ID:</strong>
-                    ${food["Bakery ID"] || "-"}
-                </p>
-
-                <p>
-                    <strong>City:</strong>
-                    ${food["City"] || "-"}
-                </p>
-
-                <p>
-                    <strong>Category:</strong>
-                    ${food["Food Category"] || "-"}
-                </p>
-
-                <p>
-                    <strong>Quantity Available:</strong>
-                    ${food["Quantity Available"] || 0}
-                </p>
-
-                <p>
-                    <strong>Daily Surplus:</strong>
-                    ${food["Daily Surplus Quantity"] || 0}
-                </p>
-
-            `;
-
-            container.appendChild(card);
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Surplus error:",
-            error
+        renderDatabaseTable(
+            container,
+            data,
+            "No surplus food found."
         );
 
+    } catch (error) {
+        console.error("Surplus error:", error);
         container.innerHTML =
-            `<p>❌ Unable to load surplus food.</p>`;
-
+            "<p>❌ Unable to load surplus food.</p>";
     }
-
 }
 
 
@@ -197,93 +188,31 @@ async function loadSurplusFood() {
 
 async function loadBakeries() {
 
-    const container =
-        document.getElementById(
-            "bakery-container"
-        );
+    const container = document.getElementById("bakery-container");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-    container.innerHTML =
-        "<p>Loading bakeries...</p>";
+    container.innerHTML = "<p>Loading bakeries...</p>";
 
     try {
-
-        const response =
-            await fetch("/api/bakeries");
-
-        const data =
-            await response.json();
+        const response = await fetch("/api/bakeries");
+        const data = await response.json();
 
         if (!response.ok || data.success === false) {
-
-            throw new Error(
-                data.error || "Unable to load bakeries"
-            );
-
+            throw new Error(data.error || "Unable to load bakeries");
         }
 
-        container.innerHTML = "";
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                "<p>No bakeries found.</p>";
-
-            return;
-
-        }
-
-        data.forEach(bakery => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "card";
-
-            card.innerHTML = `
-
-                <h3>
-                    🏪 ${bakery["Bakery Name"] || bakery.bakery_name || "-"}
-                </h3>
-
-                <p>
-                    <strong>Branch:</strong>
-                    ${bakery["Branch Name"] || bakery.branch_name || "-"}
-                </p>
-
-                <p>
-                    <strong>City:</strong>
-                    ${bakery["City"] || bakery.city || "-"}
-                </p>
-
-                <p>
-                    <strong>Address:</strong>
-                    ${bakery["Address"] || bakery.address || "-"}
-                </p>
-
-            `;
-
-            container.appendChild(card);
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Bakery error:",
-            error
+        renderDatabaseTable(
+            container,
+            data,
+            "No bakeries found."
         );
 
+    } catch (error) {
+        console.error("Bakery error:", error);
         container.innerHTML =
             "<p>❌ Unable to load bakeries.</p>";
-
     }
-
 }
 
 
@@ -293,88 +222,31 @@ async function loadBakeries() {
 
 async function loadNGOs() {
 
-    const container =
-        document.getElementById(
-            "ngo-container"
-        );
+    const container = document.getElementById("ngo-container");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-    container.innerHTML =
-        "<p>Loading NGOs...</p>";
+    container.innerHTML = "<p>Loading NGOs...</p>";
 
     try {
-
-        const response =
-            await fetch("/api/ngos");
-
-        const data =
-            await response.json();
+        const response = await fetch("/api/ngos");
+        const data = await response.json();
 
         if (!response.ok || data.success === false) {
-
-            throw new Error(
-                data.error || "Unable to load NGOs"
-            );
-
+            throw new Error(data.error || "Unable to load NGOs");
         }
 
-        container.innerHTML = "";
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                "<p>No NGOs found.</p>";
-
-            return;
-
-        }
-
-        data.forEach(ngo => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "card";
-
-            card.innerHTML = `
-
-                <h3>
-                    🤝 ${ngo["NGO Name"] || ngo.ngo_name || "-"}
-                </h3>
-
-                <p>
-                    <strong>City:</strong>
-                    ${ngo["City"] || ngo.city || "-"}
-                </p>
-
-                <p>
-                    <strong>Contact:</strong>
-                    ${ngo["Contact Number"] || ngo.contact_number || "-"}
-                </p>
-
-            `;
-
-            container.appendChild(card);
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "NGO error:",
-            error
+        renderDatabaseTable(
+            container,
+            data,
+            "No NGOs found."
         );
 
+    } catch (error) {
+        console.error("NGO error:", error);
         container.innerHTML =
             "<p>❌ Unable to load NGOs.</p>";
-
     }
-
 }
 
 
@@ -384,100 +256,37 @@ async function loadNGOs() {
 
 async function loadDonations() {
 
-    const container =
-        document.getElementById(
-            "donation-container"
-        );
+    const container = document.getElementById("donation-container");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-    container.innerHTML =
-        "<p>Loading donations...</p>";
+    container.innerHTML = "<p>Loading donations...</p>";
 
     try {
-
-        const response =
-            await fetch("/api/donations");
-
-        const data =
-            await response.json();
+        const response = await fetch("/api/donations");
+        const data = await response.json();
 
         if (!response.ok || data.success === false) {
-
-            throw new Error(
-                data.error || "Unable to load donations"
-            );
-
+            throw new Error(data.error || "Unable to load donations");
         }
 
-        container.innerHTML = "";
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML =
-                "<p>No donations found.</p>";
-
-            return;
-
-        }
-
-        data.forEach(donation => {
-
-            const card =
-                document.createElement("div");
-
-            card.className = "card";
-
-            card.innerHTML = `
-
-                <h3>
-                    🎁 ${donation.product_name || donation["Product Name"] || "-"}
-                </h3>
-
-                <p>
-                    <strong>Bakery ID:</strong>
-                    ${donation.bakery_id || "-"}
-                </p>
-
-                <p>
-                    <strong>NGO ID:</strong>
-                    ${donation.ngo_id || "-"}
-                </p>
-
-                <p>
-                    <strong>Quantity Donated:</strong>
-                    ${donation.quantity_donated || 0}
-                </p>
-
-                <p>
-                    <strong>Pickup Status:</strong>
-                    ${donation.pickup_status || "-"}
-                </p>
-
-            `;
-
-            container.appendChild(card);
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Donation error:",
-            error
+        renderDatabaseTable(
+            container,
+            data,
+            "No donation records found."
         );
 
+    } catch (error) {
+        console.error("Donation error:", error);
         container.innerHTML =
             "<p>❌ Unable to load donations.</p>";
-
     }
-
 }
 
+
+// ============================================================
+// 7. COMPLETE BUSINESS ANALYSIS
+// ============================================================
 
 // ============================================================
 // 7. COMPLETE BUSINESS ANALYSIS
@@ -616,262 +425,239 @@ async function loadBusinessAnalysis() {
 
 
         // ====================================================
-        // TOP BAKERIES
+        // ANALYTICAL TABLES
         // ====================================================
 
-        const bakeryContainer =
-            document.getElementById(
-                "top-bakeries-container"
-            );
+        const topbakeriescontainer = document.getElementById("top-bakeries-container");
 
-        if (bakeryContainer) {
+        if (topbakeriescontainer) {
 
-            bakeryContainer.innerHTML = "";
+            const rows = data.top_bakeries;
 
-            if (
-                data.top_bakeries &&
-                data.top_bakeries.length > 0
-            ) {
+            if (!Array.isArray(rows) || rows.length === 0) {
 
-                data.top_bakeries.forEach(
-                    (bakery, index) => {
+                topbakeriescontainer.innerHTML = "<p>No bakery analysis available.</p>";
 
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
+            } else {
 
-                        row.className =
-                            "analysis-row";
+                const table = document.createElement("table");
+                table.className = "data-table analysis-table";
 
-                        row.innerHTML = `
+                const thead = document.createElement("thead");
+                const headerRow = document.createElement("tr");
 
-                            <p>
-                                <strong>
-                                    ${index + 1}.
-                                    Bakery ${bakery.bakery_id}
-                                </strong>
+                [{"key":"bakery_id","label":"Bakery ID"},{"key":"surplus_quantity","label":"Surplus Quantity"}].forEach(column => {
+                    const th = document.createElement("th");
+                    th.textContent = column.label;
+                    headerRow.appendChild(th);
+                });
 
-                                —
-                                ${bakery.surplus_quantity}
-                                units surplus
-                            </p>
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
 
-                        `;
+                const tbody = document.createElement("tbody");
 
-                        bakeryContainer
-                            .appendChild(row);
+                rows.forEach(item => {
+                    const row = document.createElement("tr");
 
-                    }
-                );
+                    [{"key":"bakery_id","label":"Bakery ID"},{"key":"surplus_quantity","label":"Surplus Quantity"}].forEach(column => {
+                        const td = document.createElement("td");
+                        const value = item[column.key];
 
+                        td.textContent =
+                            value === null || value === undefined || value === ""
+                                ? "-"
+                                : value;
+
+                        row.appendChild(td);
+                    });
+
+                    tbody.appendChild(row);
+                });
+
+                table.appendChild(tbody);
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "table-wrapper";
+                wrapper.appendChild(table);
+
+                topbakeriescontainer.innerHTML = "";
+                topbakeriescontainer.appendChild(wrapper);
             }
-
-            else {
-
-                bakeryContainer.innerHTML =
-                    "<p>No bakery analysis available.</p>";
-
-            }
-
         }
 
+        const deepercategorycontainer = document.getElementById("deeper-category-container");
 
-        // ====================================================
-        // FOOD CATEGORY ANALYSIS
-        // ====================================================
+        if (deepercategorycontainer) {
 
-        const categoryContainer =
-            document.getElementById(
-                "deeper-category-container"
-            );
+            const rows = data.category_analysis;
 
-        if (categoryContainer) {
+            if (!Array.isArray(rows) || rows.length === 0) {
 
-            categoryContainer.innerHTML = "";
+                deepercategorycontainer.innerHTML = "<p>No category analysis available.</p>";
 
-            if (
-                data.category_analysis &&
-                data.category_analysis.length > 0
-            ) {
+            } else {
 
-                data.category_analysis.forEach(
-                    category => {
+                const table = document.createElement("table");
+                table.className = "data-table analysis-table";
 
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
+                const thead = document.createElement("thead");
+                const headerRow = document.createElement("tr");
 
-                        row.className =
-                            "analysis-row";
+                [{"key":"category","label":"Food Category"},{"key":"total_surplus","label":"Total Surplus"},{"key":"total_waste","label":"Total Waste"},{"key":"average_sales","label":"Average Daily Sales"}].forEach(column => {
+                    const th = document.createElement("th");
+                    th.textContent = column.label;
+                    headerRow.appendChild(th);
+                });
 
-                        row.innerHTML = `
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
 
-                            <p>
-                                <strong>
-                                    ${category.category}
-                                </strong>
-                            </p>
+                const tbody = document.createElement("tbody");
 
-                            <p>
-                                Total Surplus:
-                                ${category.total_surplus}
-                            </p>
+                rows.forEach(item => {
+                    const row = document.createElement("tr");
 
-                            <p>
-                                Total Waste:
-                                ${category.total_waste}
-                            </p>
+                    [{"key":"category","label":"Food Category"},{"key":"total_surplus","label":"Total Surplus"},{"key":"total_waste","label":"Total Waste"},{"key":"average_sales","label":"Average Daily Sales"}].forEach(column => {
+                        const td = document.createElement("td");
+                        const value = item[column.key];
 
-                            <p>
-                                Average Daily Sales:
-                                ${category.average_sales}
-                            </p>
+                        td.textContent =
+                            value === null || value === undefined || value === ""
+                                ? "-"
+                                : value;
 
-                        `;
+                        row.appendChild(td);
+                    });
 
-                        categoryContainer
-                            .appendChild(row);
+                    tbody.appendChild(row);
+                });
 
-                    }
-                );
+                table.appendChild(tbody);
 
+                const wrapper = document.createElement("div");
+                wrapper.className = "table-wrapper";
+                wrapper.appendChild(table);
+
+                deepercategorycontainer.innerHTML = "";
+                deepercategorycontainer.appendChild(wrapper);
             }
-
-            else {
-
-                categoryContainer.innerHTML =
-                    "<p>No category analysis available.</p>";
-
-            }
-
         }
 
+        const highwastecontainer = document.getElementById("high-waste-container");
 
-        // ====================================================
-        // HIGH-WASTE PRODUCTS
-        // ====================================================
+        if (highwastecontainer) {
 
-        const wasteContainer =
-            document.getElementById(
-                "high-waste-container"
-            );
+            const rows = data.high_waste_products;
 
-        if (wasteContainer) {
+            if (!Array.isArray(rows) || rows.length === 0) {
 
-            wasteContainer.innerHTML = "";
+                highwastecontainer.innerHTML = "<p>No high-waste products available.</p>";
 
-            if (
-                data.high_waste_products &&
-                data.high_waste_products.length > 0
-            ) {
+            } else {
 
-                data.high_waste_products.forEach(
-                    product => {
+                const table = document.createElement("table");
+                table.className = "data-table analysis-table";
 
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
+                const thead = document.createElement("thead");
+                const headerRow = document.createElement("tr");
 
-                        row.className =
-                            "analysis-row";
+                [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"waste","label":"Average Daily Waste"}].forEach(column => {
+                    const th = document.createElement("th");
+                    th.textContent = column.label;
+                    headerRow.appendChild(th);
+                });
 
-                        row.innerHTML = `
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
 
-                            <p>
-                                <strong>
-                                    ${product.product}
-                                </strong>
-                                (${product.category})
-                            </p>
+                const tbody = document.createElement("tbody");
 
-                            <p>
-                                Average Daily Waste:
-                                ${product.waste}
-                            </p>
+                rows.forEach(item => {
+                    const row = document.createElement("tr");
 
-                        `;
+                    [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"waste","label":"Average Daily Waste"}].forEach(column => {
+                        const td = document.createElement("td");
+                        const value = item[column.key];
 
-                        wasteContainer
-                            .appendChild(row);
+                        td.textContent =
+                            value === null || value === undefined || value === ""
+                                ? "-"
+                                : value;
 
-                    }
-                );
+                        row.appendChild(td);
+                    });
 
+                    tbody.appendChild(row);
+                });
+
+                table.appendChild(tbody);
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "table-wrapper";
+                wrapper.appendChild(table);
+
+                highwastecontainer.innerHTML = "";
+                highwastecontainer.appendChild(wrapper);
             }
-
-            else {
-
-                wasteContainer.innerHTML =
-                    "<p>No high-waste products available.</p>";
-
-            }
-
         }
 
+        const highsurpluscontainer = document.getElementById("high-surplus-container");
 
-        // ====================================================
-        // HIGH-SURPLUS PRODUCTS
-        // ====================================================
+        if (highsurpluscontainer) {
 
-        const surplusContainer =
-            document.getElementById(
-                "high-surplus-container"
-            );
+            const rows = data.high_surplus_products;
 
-        if (surplusContainer) {
+            if (!Array.isArray(rows) || rows.length === 0) {
 
-            surplusContainer.innerHTML = "";
+                highsurpluscontainer.innerHTML = "<p>No high-surplus products available.</p>";
 
-            if (
-                data.high_surplus_products &&
-                data.high_surplus_products.length > 0
-            ) {
+            } else {
 
-                data.high_surplus_products.forEach(
-                    product => {
+                const table = document.createElement("table");
+                table.className = "data-table analysis-table";
 
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
+                const thead = document.createElement("thead");
+                const headerRow = document.createElement("tr");
 
-                        row.className =
-                            "analysis-row";
+                [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"surplus","label":"Daily Surplus"}].forEach(column => {
+                    const th = document.createElement("th");
+                    th.textContent = column.label;
+                    headerRow.appendChild(th);
+                });
 
-                        row.innerHTML = `
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
 
-                            <p>
-                                <strong>
-                                    ${product.product}
-                                </strong>
-                                (${product.category})
-                            </p>
+                const tbody = document.createElement("tbody");
 
-                            <p>
-                                Daily Surplus:
-                                ${product.surplus}
-                            </p>
+                rows.forEach(item => {
+                    const row = document.createElement("tr");
 
-                        `;
+                    [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"surplus","label":"Daily Surplus"}].forEach(column => {
+                        const td = document.createElement("td");
+                        const value = item[column.key];
 
-                        surplusContainer
-                            .appendChild(row);
+                        td.textContent =
+                            value === null || value === undefined || value === ""
+                                ? "-"
+                                : value;
 
-                    }
-                );
+                        row.appendChild(td);
+                    });
 
+                    tbody.appendChild(row);
+                });
+
+                table.appendChild(tbody);
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "table-wrapper";
+                wrapper.appendChild(table);
+
+                highsurpluscontainer.innerHTML = "";
+                highsurpluscontainer.appendChild(wrapper);
             }
-
-            else {
-
-                surplusContainer.innerHTML =
-                    "<p>No high-surplus products available.</p>";
-
-            }
-
         }
 
 
