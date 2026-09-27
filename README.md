@@ -200,24 +200,18 @@ This table is used to analyse food surplus and waste.
 
 # 6. Database Relationships
 
-The major relationships in the database are:
+                 PLATE 2 PLATE
 
-```text
-                    BAKERIES
-                       |
-          +------------+------------+
-          |                         |
-          v                         v
-     FOOD_WASTE                  DONATIONS
-                                    |
-                                    v
-                                   NGOS
-
-
-FOOD_CATEGORY
-      |
-      v
-FOOD_WASTE
-
-
-CUSTOMERS
+                    User
+                     ↓
+              HTML Website
+                     ↓
+               JavaScript
+                     ↓
+                Supabase
+                     ↓
+              PostgreSQL DB
+             ↙       ↓       ↘
+       Bakeries     NGOs    Donations
+                     ↓
+                Food Waste
