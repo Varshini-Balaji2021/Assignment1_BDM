@@ -5,12 +5,19 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Plate 2 Plate</title>
+    <title>
+        Plate 2 Plate | Food Waste Reduction
+    </title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
@@ -19,22 +26,23 @@
 
 
     <!-- =====================================
-         HEADER
+         NAVIGATION
     ====================================== -->
 
     <header>
+           <!-- LOGO + COMPANY NAME -->
+    <div class="logo">
 
-        <div class="logo">
+        <img
+            src="assets/plate2plate-logo.png"
+            alt="Plate 2 Plate Logo"
+        >
 
-            <img
-                src="assets/Plate%202%20Plate%20logo.png"
-                alt="Plate 2 Plate Logo">
+        <span>
+            Plate 2 Plate
+        </span>
 
-            <span>
-                Plate 2 Plate
-            </span>
-
-        </div>
+    </div>
 
 
         <nav>
@@ -53,6 +61,10 @@
 
             <a href="#visualization">
                 Visualization
+            </a>
+
+            <a href="#business-insights">
+                Business Insights
             </a>
 
             <a href="#surplus">
@@ -76,7 +88,6 @@
     </header>
 
 
-
     <!-- =====================================
          DATABASE CONNECTION STATUS
     ====================================== -->
@@ -88,12 +99,14 @@
     </div>
 
 
-
     <!-- =====================================
          HOME
     ====================================== -->
 
-    <section id="home" class="hero">
+    <section
+        id="home"
+        class="hero"
+    >
 
         <div class="hero-content">
 
@@ -121,18 +134,16 @@
             <div class="buttons">
 
                 <button
-                    onclick="showSection('surplus')">
-
+                    onclick="showSection('surplus')"
+                >
                     View Surplus Food
-
                 </button>
 
 
                 <button
-                    onclick="showSection('ngos')">
-
+                    onclick="showSection('ngos')"
+                >
                     Find NGOs
-
                 </button>
 
             </div>
@@ -142,14 +153,14 @@
     </section>
 
 
-
     <!-- =====================================
          USER FLOW
     ====================================== -->
 
     <section
         id="user-flow"
-        class="section">
+        class="section"
+    >
 
         <h2>
             🔄 Plate 2 Plate User Flow
@@ -168,12 +179,12 @@
 
             <img
                 src="assets/Plate%202%20Plate%20%E2%80%94%20System%20User%20Flow.png"
-                alt="Plate 2 Plate System User Flow">
+                alt="Plate 2 Plate System User Flow"
+            >
 
         </div>
 
     </section>
-
 
 
     <!-- =====================================
@@ -182,7 +193,8 @@
 
     <section
         id="er-diagram"
-        class="section">
+        class="section"
+    >
 
         <h2>
             🗂️ Plate 2 Plate ER Diagram
@@ -202,12 +214,12 @@
 
             <img
                 src="assets/Plate%202%20Plate%20ER%20Diagram.png"
-                alt="Plate 2 Plate ER Diagram">
+                alt="Plate 2 Plate ER Diagram"
+            >
 
         </div>
 
     </section>
-
 
 
     <!-- =====================================
@@ -216,7 +228,8 @@
 
     <section
         id="visualization"
-        class="section">
+        class="section"
+    >
 
         <h2>
             📈 Food Surplus Visualization
@@ -240,12 +253,234 @@
 
             <img
                 src="assets/food_surplus_chart.png"
-                alt="Total Food Surplus by Category">
+                alt="Total Food Surplus by Category"
+            >
 
         </div>
 
     </section>
 
+
+    <!-- =====================================
+         BUSINESS INSIGHTS
+    ====================================== -->
+
+    <section
+        id="business-insights"
+        class="section"
+    >
+
+        <h2>
+            📊 Business Insights & Analysis
+        </h2>
+
+
+        <p>
+
+            Business analysis generated directly
+            from the Plate 2 Plate food waste,
+            surplus and donation database.
+
+        </p>
+
+
+        <!-- =================================
+             BUSINESS METRICS
+        ================================== -->
+
+        <div class="cards">
+
+
+            <div class="card insight-card">
+
+                <h3>
+                    Total Surplus
+                </h3>
+
+                <p id="business-total-surplus">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="card insight-card">
+
+                <h3>
+                    Total Waste
+                </h3>
+
+                <p id="business-total-waste">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="card insight-card">
+
+                <h3>
+                    Total Donated
+                </h3>
+
+                <p id="business-total-donated">
+                    Loading...
+                </p>
+
+            </div>
+
+
+            <div class="card insight-card">
+
+                <h3>
+                    Donation-to-Surplus Ratio
+                </h3>
+
+                <p id="business-donation-rate">
+                    Loading...
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================
+             KEY BUSINESS FINDINGS
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                📌 Key Business Findings
+            </h3>
+
+
+            <p>
+
+                Highest-surplus food category:
+
+                <strong id="highest-surplus-category">
+                    Loading...
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Highest-waste food category:
+
+                <strong id="highest-waste-category">
+                    Loading...
+                </strong>
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================
+             TOP BAKERIES
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                🏪 Top Bakeries by Surplus
+            </h3>
+
+
+            <div id="top-bakeries-container">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             FOOD CATEGORY ANALYSIS
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                🍞 Food Category Analysis
+            </h3>
+
+
+            <div id="deeper-category-container">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             HIGH-WASTE PRODUCTS
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                ⚠️ High-Waste Products
+            </h3>
+
+
+            <div id="high-waste-container">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             HIGH-SURPLUS PRODUCTS
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                📦 High-Surplus Products
+            </h3>
+
+
+            <div id="high-surplus-container">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             DONATION AVAILABILITY
+        ================================== -->
+
+        <div class="asset-card">
+
+            <h3>
+                🤝 Donation Availability
+            </h3>
+
+
+            <div id="donation-availability-container">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+    </section>
 
 
     <!-- =====================================
@@ -254,7 +489,8 @@
 
     <section
         id="surplus"
-        class="section">
+        class="section"
+    >
 
         <h2>
             🍞 Available Surplus Food
@@ -263,15 +499,16 @@
 
         <p>
 
-            Food available for redistribution
-            from bakeries.
+            Food surplus currently available
+            from participating bakeries.
 
         </p>
 
 
         <div
             id="surplus-container"
-            class="cards">
+            class="cards"
+        >
 
             <p>
                 Loading surplus food...
@@ -282,31 +519,32 @@
     </section>
 
 
-
     <!-- =====================================
          BAKERIES
     ====================================== -->
 
     <section
         id="bakeries"
-        class="section">
+        class="section"
+    >
 
         <h2>
-            🏪 Partner Bakeries
+            🏪 Bakeries
         </h2>
 
 
         <p>
 
-            Bakeries participating in
-            Plate 2 Plate.
+            Bakeries participating in the
+            Plate 2 Plate platform.
 
         </p>
 
 
         <div
             id="bakery-container"
-            class="cards">
+            class="cards"
+        >
 
             <p>
                 Loading bakeries...
@@ -317,14 +555,14 @@
     </section>
 
 
-
     <!-- =====================================
          NGOs
     ====================================== -->
 
     <section
         id="ngos"
-        class="section">
+        class="section"
+    >
 
         <h2>
             🤝 NGOs
@@ -341,7 +579,8 @@
 
         <div
             id="ngo-container"
-            class="cards">
+            class="cards"
+        >
 
             <p>
                 Loading NGOs...
@@ -352,14 +591,14 @@
     </section>
 
 
-
     <!-- =====================================
          DONATIONS
     ====================================== -->
 
     <section
         id="donations"
-        class="section">
+        class="section"
+    >
 
         <h2>
             🎁 Donations
@@ -376,7 +615,8 @@
 
         <div
             id="donation-container"
-            class="cards">
+            class="cards"
+        >
 
             <p>
                 Loading donations...
@@ -387,7 +627,6 @@
     </section>
 
 
-
     <!-- =====================================
          FOOTER
     ====================================== -->
@@ -395,26 +634,18 @@
     <footer>
 
         <p>
+
             © 2026 Plate 2 Plate |
+
             Food Waste Reduction Initiative
+
         </p>
 
     </footer>
 
 
-
     <!-- =====================================
-         SUPABASE
-    ====================================== -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-
-
-
-    <!-- =====================================
-         YOUR JAVASCRIPT
+         JAVASCRIPT
     ====================================== -->
 
     <script src="script.js"></script>

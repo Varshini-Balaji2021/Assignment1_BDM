@@ -4,10 +4,12 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: Arial, sans-serif;
     background: #f5f7f2;
     color: #333;
+    line-height: 1.6;
 }
 
 
@@ -34,7 +36,9 @@ header {
 }
 
 
-/* Logo */
+/* =====================================
+   LOGO
+===================================== */
 
 .logo {
     display: flex;
@@ -63,7 +67,9 @@ header {
 }
 
 
-/* Navigation */
+/* =====================================
+   NAVIGATION
+===================================== */
 
 header nav {
     display: flex;
@@ -82,6 +88,8 @@ header nav a {
     font-weight: 500;
 
     white-space: nowrap;
+
+    transition: color 0.2s ease;
 }
 
 header nav a:hover {
@@ -101,6 +109,8 @@ header nav a:hover {
     background: #f1f8e9;
 
     font-size: 14px;
+
+    border-bottom: 1px solid #dce8d6;
 }
 
 
@@ -162,10 +172,16 @@ button {
     cursor: pointer;
 
     margin: 5px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 button:hover {
     background: #1b5e20;
+
+    transform: translateY(-1px);
 }
 
 
@@ -303,6 +319,17 @@ button:hover {
 
     box-shadow:
         0 3px 10px rgba(0, 0, 0, 0.1);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
 .card h3 {
@@ -311,6 +338,169 @@ button:hover {
 
 .card p {
     margin: 7px 0;
+}
+
+
+/* =====================================
+   BUSINESS INSIGHTS
+===================================== */
+
+#business-insights {
+    background: #f5f7f2;
+}
+
+
+/* =====================================
+   BUSINESS METRIC CARDS
+===================================== */
+
+.insight-card {
+    text-align: center;
+
+    border-top: 4px solid #2e7d32;
+
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+.insight-card h3 {
+    font-size: 17px;
+
+    color: #455a64;
+
+    margin-bottom: 12px;
+}
+
+.insight-card p {
+    font-size: 30px;
+
+    font-weight: bold;
+
+    color: #2e7d32;
+
+    margin: 0;
+}
+
+
+/* =====================================
+   BUSINESS ANALYSIS ROWS
+===================================== */
+
+.analysis-row {
+    background: #f8faf7;
+
+    border-left: 4px solid #2e7d32;
+
+    padding: 15px 18px;
+
+    margin-bottom: 12px;
+
+    border-radius: 8px;
+}
+
+.analysis-row:last-child {
+    margin-bottom: 0;
+}
+
+.analysis-row p {
+    margin: 5px 0;
+}
+
+.analysis-row strong {
+    color: #263238;
+}
+
+
+/* =====================================
+   KEY BUSINESS FINDINGS
+===================================== */
+
+#highest-surplus-category,
+#highest-waste-category {
+    color: #2e7d32;
+
+    font-weight: bold;
+}
+
+
+/* =====================================
+   TOP BAKERIES
+===================================== */
+
+#top-bakeries-container {
+    margin-top: 15px;
+}
+
+
+/* =====================================
+   FOOD CATEGORY ANALYSIS
+===================================== */
+
+#deeper-category-container {
+    margin-top: 15px;
+}
+
+
+/* =====================================
+   HIGH WASTE PRODUCTS
+===================================== */
+
+#high-waste-container {
+    margin-top: 15px;
+}
+
+#high-waste-container .analysis-row {
+    border-left-color: #c62828;
+}
+
+
+/* =====================================
+   HIGH SURPLUS PRODUCTS
+===================================== */
+
+#high-surplus-container {
+    margin-top: 15px;
+}
+
+#high-surplus-container .analysis-row {
+    border-left-color: #2e7d32;
+}
+
+
+/* =====================================
+   DONATION AVAILABILITY
+===================================== */
+
+#donation-availability-container {
+    margin-top: 15px;
+}
+
+#donation-availability-container .analysis-row {
+    border-left-color: #1565c0;
+}
+
+
+/* =====================================
+   BUSINESS INSIGHTS SPACING
+===================================== */
+
+#business-insights .asset-card {
+    margin-top: 30px;
+}
+
+#business-insights > p {
+    max-width: 850px;
+
+    margin-bottom: 10px;
+
+    color: #555;
 }
 
 
@@ -357,6 +547,71 @@ footer {
 
     .section {
         padding: 50px 20px;
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .hero {
+        min-height: 450px;
+
+        padding: 40px 15px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero h2 {
+        font-size: 22px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .section {
+        padding: 40px 15px;
+    }
+
+    .section h2 {
+        font-size: 27px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .insight-card {
+        min-height: 130px;
+    }
+
+    .insight-card p {
+        font-size: 26px;
+    }
+
+    .asset-card {
+        padding: 18px;
+    }
+
+    header nav {
+        gap: 8px;
+    }
+
+    header nav a {
+        font-size: 13px;
+    }
+
+    button {
+        width: 100%;
+
+        max-width: 280px;
     }
 
 }
