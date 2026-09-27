@@ -592,7 +592,7 @@ def business_analysis():
         top_bakeries = [
             {
                 "bakery_id": str(b_id),
-                "surplus_quantity": float(surplus)
+                "total_surplus": float(surplus)
             }
             for b_id, surplus
             in bakery_surplus.items()
