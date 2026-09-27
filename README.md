@@ -32,7 +32,7 @@ Food businesses often face surplus food at the end of the day, while NGOs and co
 The system uses:
 - PostgreSQL database hosted on Supabase
 - FastAPI backend
-- Python for analysis and preprocessing
+- Python for analysis 
 - HTML, CSS, and JavaScript for the frontend
 - SQL queries for database analysis and reporting
 
@@ -67,12 +67,11 @@ The project aims to:
 1. Design a relational database for surplus food management
 2. Store data for bakeries, products, NGOs, donations, and waste
 3. Use SQL for analysis and reporting
-4. Perform data preprocessing and feature engineering using Python
-5. Generate analytical insights from business data
-6. Connect the frontend with a FastAPI backend
-7. Display live results through a browser-based interface
-8. Implement secure database access using environment variables and local configuration
-9. Maintain the project using Git and GitHub
+4. Generate analytical insights from business data
+5. Connect the frontend with a FastAPI backend
+6. Display live results through a browser-based interface
+7. Implement secure database access using environment variables and local configuration
+8. Maintain the project using Git and GitHub
 
 ---
 
@@ -239,7 +238,6 @@ Python is used for:
 - Data cleaning
 - Missing value checks
 - Duplicate checking
-- Feature engineering
 - Business analysis
 - Visualization
 
@@ -398,7 +396,7 @@ The project demonstrates aggregation, joins, grouping, filtering, subqueries, CT
 
 ### Python Analytics
 
-Python and Pandas are used for preprocessing, feature engineering, business analysis, and visualization.
+Python and Pandas are used for  , business analysis, and visualization.
 
 ### FastAPI Integration
 

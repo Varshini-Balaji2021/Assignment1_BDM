@@ -40,3 +40,19 @@ SELECT * FROM public.ngos LIMIT 10;
 SELECT * FROM public.food_waste LIMIT 5;
 
 SELECT * FROM public.donations LIMIT 5;
+
+-- ============================================================
+-- CUSTOMERS
+-- ============================================================
+
+ALTER TABLE public.customers ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read customers"
+ON public.customers
+FOR SELECT
+TO anon
+USING (true);
+
+SELECT *
+FROM public.customers
+LIMIT 10;
