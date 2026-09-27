@@ -49,7 +49,6 @@ Food wastage often happens because surplus inventory is not tracked effectively 
 - Donation availability
 - NGO distribution support
 - Pickup and donation status
-=======
 - Product-level waste
 - Category-level surplus
 - Bakery-level surplus
