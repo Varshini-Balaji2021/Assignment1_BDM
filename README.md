@@ -355,10 +355,10 @@ http://127.0.0.1:8000/api/business-analysis
 
 ## Future Enhancements
 
-<<<<<<< HEAD
+
 Possible improvements for the system include:
-=======
-```text
+
+
               SUPABASE POSTGRESQL
                        │
                        ▼
