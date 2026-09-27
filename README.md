@@ -53,7 +53,6 @@ Businesses may need better visibility into:
 - Product-level waste
 - Category-level surplus
 - Bakery-level surplus
-- Donation availability
 - Donation quantities
 - NGO distribution
 - Pickup status
@@ -455,14 +454,6 @@ Identifies products with comparatively high average daily waste.
 
 Identifies products with comparatively high daily surplus.
 
-## 11.11 Donation Availability
-
-Compares food records based on whether donation is available and summarizes:
-
-- Number of products
-- Total surplus
-- Total waste
-
 ---
 
 # 📊 12. Data Visualization
@@ -822,7 +813,7 @@ FastAPI provides the backend layer connecting the website with the Supabase Post
 
 ### Business Insights
 
-The website displays live metrics and business analysis covering surplus, waste, donations, categories, bakeries, products, and donation availability.
+The website displays live metrics and business analysis covering surplus, waste, donations, categories, bakeries, and products. The separate Donation Availability insight has been removed to keep the dashboard focused on actual donation activity and core business metrics.
 
 ### Data Visualization
 
