@@ -44,11 +44,20 @@ Food wastage often happens because surplus inventory is not tracked effectively 
 
 - Daily surplus food quantity
 - Food waste levels
+<<<<<<< HEAD
 - Category-wise waste and surplus
 - Bakery-wise performance
 - Donation availability
 - NGO distribution support
 - Pickup and donation status
+=======
+- Product-level waste
+- Category-level surplus
+- Bakery-level surplus
+- Donation quantities
+- NGO distribution
+- Pickup status
+>>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
 
 Plate 2 Plate addresses this by combining a structured database, analytical queries, and a user-friendly web interface.
 
@@ -101,6 +110,59 @@ Business Analysis & Reporting
 Web Dashboard / API Responses
 ```
 
+<<<<<<< HEAD
+=======
+The analysis includes:
+
+## 11.1 Total Surplus
+
+Total daily surplus quantity available across food-waste records.
+
+## 11.2 Total Waste
+
+Total average daily waste across the food-waste records.
+
+## 11.3 Total Donated
+
+Total quantity recorded in the donations table.
+
+## 11.4 Donation-to-Surplus Ratio
+
+Calculated as:
+
+```text
+(Total Donated / Total Surplus) × 100
+```
+
+## 11.5 Highest Surplus Category
+
+Identifies the food category with the highest total daily surplus.
+
+## 11.6 Highest Waste Category
+
+Identifies the food category with the highest average daily waste.
+
+## 11.7 Top Bakeries by Surplus
+
+Ranks bakery IDs according to total daily surplus.
+
+## 11.8 Food Category Analysis
+
+Provides category-level:
+
+- Total surplus
+- Total waste
+- Average daily sales
+
+## 11.9 High-Waste Products
+
+Identifies products with comparatively high average daily waste.
+
+## 11.10 High-Surplus Products
+
+Identifies products with comparatively high daily surplus.
+
+>>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
 ---
 
 ## Database Design
@@ -301,7 +363,78 @@ http://127.0.0.1:8000/api/business-analysis
 
 ## Future Enhancements
 
+<<<<<<< HEAD
 Possible improvements for the system include:
+=======
+```text
+              SUPABASE POSTGRESQL
+                       │
+                       ▼
+                 FastAPI Backend
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+     Surplus        Bakeries         NGOs
+        │              │              │
+        └──────────────┼──────────────┘
+                       ▼
+                   Donations
+                       │
+                       ▼
+              Business Analysis
+                       │
+                       ▼
+                  JavaScript
+                       │
+                       ▼
+                  index.html
+                       │
+                       ▼
+                 User Interface
+```
+
+---
+
+# 📌 24. Key Project Outcomes
+
+### Database Management
+
+A relational PostgreSQL database is used to organize food waste, surplus, bakery, NGO, and donation information.
+
+### SQL Analytics
+
+The project demonstrates aggregation, joins, grouping, filtering, subqueries, CTEs, and window functions.
+
+### Python Analytics
+
+Python and Pandas are used for preprocessing, feature engineering, business analysis, and visualization.
+
+### FastAPI Integration
+
+FastAPI provides the backend layer connecting the website with the Supabase PostgreSQL database.
+
+### Business Insights
+
+The website displays live metrics and business analysis covering surplus, waste, donations, categories, bakeries, and products. The separate Donation Availability insight has been removed to keep the dashboard focused on actual donation activity and core business metrics.
+
+### Data Visualization
+
+Food surplus information is represented visually to support analysis.
+
+### Security
+
+Database credentials remain in the local `.env` configuration and should not be committed to GitHub.
+
+### Version Control
+
+The project is maintained using Git and GitHub.
+
+---
+
+# 🔮 25. Future Enhancements
+
+The current system can be extended with:
+>>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
 
 - User authentication
 - Bakery and NGO login
