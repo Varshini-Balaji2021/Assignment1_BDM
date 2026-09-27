@@ -716,7 +716,7 @@ async function loadBusinessAnalysis() {
 
                 [
                     {
-                        key: "bakery_name",
+                        key: "bakery_id",
                         label: "Bakery"
                     },
                     {
@@ -763,7 +763,7 @@ async function loadBusinessAnalysis() {
 
                     [
                         {
-                            key: "bakery_name",
+                            key: "bakery_id",
                             label: "Bakery"
                         },
                         {
