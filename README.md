@@ -11,7 +11,7 @@ Plate 2 Plate is a database-driven solution designed to reduce food waste by eff
 ## Team
 
 Team Name: Plate2Plate  
-Group: 2
+
 
 - Nanthitha. P – CB.BU.P2ASB25114
 - Navaneeth Krishnan M – CB.BU.P2ASB25117
@@ -44,7 +44,6 @@ Food wastage often happens because surplus inventory is not tracked effectively 
 
 - Daily surplus food quantity
 - Food waste levels
-<<<<<<< HEAD
 - Category-wise waste and surplus
 - Bakery-wise performance
 - Donation availability
@@ -57,7 +56,6 @@ Food wastage often happens because surplus inventory is not tracked effectively 
 - Donation quantities
 - NGO distribution
 - Pickup status
->>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
 
 Plate 2 Plate addresses this by combining a structured database, analytical queries, and a user-friendly web interface.
 
@@ -96,7 +94,6 @@ The project aims to:
 
 ## Application Workflow
 
-```text
 User
   ↓
 Frontend (HTML/CSS/JavaScript)
@@ -108,10 +105,7 @@ Supabase PostgreSQL
 Business Analysis & Reporting
   ↓
 Web Dashboard / API Responses
-```
 
-<<<<<<< HEAD
-=======
 The analysis includes:
 
 ## 11.1 Total Surplus
@@ -130,9 +124,8 @@ Total quantity recorded in the donations table.
 
 Calculated as:
 
-```text
 (Total Donated / Total Surplus) × 100
-```
+
 
 ## 11.5 Highest Surplus Category
 
@@ -162,7 +155,6 @@ Identifies products with comparatively high average daily waste.
 
 Identifies products with comparatively high daily surplus.
 
->>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
 ---
 
 ## Database Design
