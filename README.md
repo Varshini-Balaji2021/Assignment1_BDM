@@ -426,8 +426,6 @@ The project is maintained using Git and GitHub.
 # 🔮 25. Future Enhancements
 
 The current system can be extended with:
->>>>>>> c6a82fba17148c4819a8f313883a53fa346cda02
-
 - User authentication
 - Bakery and NGO login
 - Admin dashboard
