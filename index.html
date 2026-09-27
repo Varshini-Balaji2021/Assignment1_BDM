@@ -1,51 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Plate 2 Plate</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
     <header>
-        <div class="logo">🍽️ Plate 2 Plate</div>
+
+        <div class="logo">
+
+            <img
+                src="assets/Plate%202%20Plate%20logo.png"
+                alt="Plate 2 Plate Logo">
+
+            <span>
+                Plate 2 Plate
+            </span>
+
+        </div>
+
 
         <nav>
-            <a href="#home">Home</a>
-            <a href="#surplus">Surplus Food</a>
-            <a href="#bakeries">Bakeries</a>
-            <a href="#ngos">NGOs</a>
-            <a href="#donations">Donations</a>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#user-flow">
+                User Flow
+            </a>
+
+            <a href="#er-diagram">
+                ER Diagram
+            </a>
+
+            <a href="#visualization">
+                Visualization
+            </a>
+
+            <a href="#surplus">
+                Surplus Food
+            </a>
+
+            <a href="#bakeries">
+                Bakeries
+            </a>
+
+            <a href="#ngos">
+                NGOs
+            </a>
+
+            <a href="#donations">
+                Donations
+            </a>
+
         </nav>
+
     </header>
 
+
+
+    <!-- =====================================
+         DATABASE CONNECTION STATUS
+    ====================================== -->
+
+    <div id="connection-status">
+
+        Checking database connection...
+
+    </div>
+
+
+
+    <!-- =====================================
+         HOME
+    ====================================== -->
 
     <section id="home" class="hero">
 
         <div class="hero-content">
 
-            <h1>Plate 2 Plate</h1>
+            <h1>
+                Plate 2 Plate
+            </h1>
 
-            <h2>Reducing Food Waste. Feeding Communities.</h2>
+
+            <h2>
+                Reducing Food Waste.
+                Feeding Communities.
+            </h2>
+
 
             <p>
-                A food redistribution platform connecting bakeries,
-                surplus food, and NGOs to reduce food waste and
+
+                A food redistribution platform
+                connecting bakeries, surplus food,
+                and NGOs to reduce food waste and
                 support communities in need.
+
             </p>
+
 
             <div class="buttons">
 
-                <button onclick="showSection('surplus')">
+                <button
+                    onclick="showSection('surplus')">
+
                     View Surplus Food
+
                 </button>
 
-                <button onclick="showSection('ngos')">
+
+                <button
+                    onclick="showSection('ngos')">
+
                     Find NGOs
+
                 </button>
 
             </div>
@@ -55,68 +142,284 @@
     </section>
 
 
-    <section id="surplus" class="section">
 
-        <h2>🍞 Available Surplus Food</h2>
+    <!-- =====================================
+         USER FLOW
+    ====================================== -->
 
-        <p>Food available for redistribution from bakeries.</p>
+    <section
+        id="user-flow"
+        class="section">
 
-        <div id="surplus-container" class="cards">
-
-            <p>Loading surplus food...</p>
-
-        </div>
-
-    </section>
-
-
-    <section id="bakeries" class="section">
-
-        <h2>🏪 Partner Bakeries</h2>
-
-        <div id="bakery-container" class="cards">
-
-            <p>Loading bakeries...</p>
-
-        </div>
-
-    </section>
+        <h2>
+            🔄 Plate 2 Plate User Flow
+        </h2>
 
 
-    <section id="ngos" class="section">
+        <p>
 
-        <h2>🤝 NGOs</h2>
+            The complete user flow of the
+            Plate 2 Plate platform.
 
-        <div id="ngo-container" class="cards">
+        </p>
 
-            <p>Loading NGOs...</p>
+
+        <div class="asset-card">
+
+            <img
+                src="assets/Plate%202%20Plate%20%E2%80%94%20System%20User%20Flow.png"
+                alt="Plate 2 Plate System User Flow">
 
         </div>
 
     </section>
 
 
-    <section id="donations" class="section">
 
-        <h2>🎁 Donations</h2>
+    <!-- =====================================
+         ER DIAGRAM
+    ====================================== -->
 
-        <div id="donation-container" class="cards">
+    <section
+        id="er-diagram"
+        class="section">
 
-            <p>Loading donations...</p>
+        <h2>
+            🗂️ Plate 2 Plate ER Diagram
+        </h2>
+
+
+        <p>
+
+            Entity Relationship Diagram showing
+            the database structure of the
+            Plate 2 Plate project.
+
+        </p>
+
+
+        <div class="asset-card">
+
+            <img
+                src="assets/Plate%202%20Plate%20ER%20Diagram.png"
+                alt="Plate 2 Plate ER Diagram">
 
         </div>
 
     </section>
 
+
+
+    <!-- =====================================
+         VISUALIZATION
+    ====================================== -->
+
+    <section
+        id="visualization"
+        class="section">
+
+        <h2>
+            📈 Food Surplus Visualization
+        </h2>
+
+
+        <p>
+
+            Visualization generated from the
+            Plate 2 Plate food waste data.
+
+        </p>
+
+
+        <div class="asset-card">
+
+            <h3>
+                Total Food Surplus by Category
+            </h3>
+
+
+            <img
+                src="assets/food_surplus_chart.png"
+                alt="Total Food Surplus by Category">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         SURPLUS FOOD
+    ====================================== -->
+
+    <section
+        id="surplus"
+        class="section">
+
+        <h2>
+            🍞 Available Surplus Food
+        </h2>
+
+
+        <p>
+
+            Food available for redistribution
+            from bakeries.
+
+        </p>
+
+
+        <div
+            id="surplus-container"
+            class="cards">
+
+            <p>
+                Loading surplus food...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         BAKERIES
+    ====================================== -->
+
+    <section
+        id="bakeries"
+        class="section">
+
+        <h2>
+            🏪 Partner Bakeries
+        </h2>
+
+
+        <p>
+
+            Bakeries participating in
+            Plate 2 Plate.
+
+        </p>
+
+
+        <div
+            id="bakery-container"
+            class="cards">
+
+            <p>
+                Loading bakeries...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         NGOs
+    ====================================== -->
+
+    <section
+        id="ngos"
+        class="section">
+
+        <h2>
+            🤝 NGOs
+        </h2>
+
+
+        <p>
+
+            NGOs receiving and redistributing
+            surplus food.
+
+        </p>
+
+
+        <div
+            id="ngo-container"
+            class="cards">
+
+            <p>
+                Loading NGOs...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         DONATIONS
+    ====================================== -->
+
+    <section
+        id="donations"
+        class="section">
+
+        <h2>
+            🎁 Donations
+        </h2>
+
+
+        <p>
+
+            Track food donations and
+            pickup status.
+
+        </p>
+
+
+        <div
+            id="donation-container"
+            class="cards">
+
+            <p>
+                Loading donations...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
 
     <footer>
 
-        <p>© 2026 Plate 2 Plate | Food Waste Reduction Initiative</p>
+        <p>
+            © 2026 Plate 2 Plate |
+            Food Waste Reduction Initiative
+        </p>
 
     </footer>
 
 
+
+    <!-- =====================================
+         SUPABASE
+    ====================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+
+
+
+    <!-- =====================================
+         YOUR JAVASCRIPT
+    ====================================== -->
+
     <script src="script.js"></script>
 
+
 </body>
+
 </html>
