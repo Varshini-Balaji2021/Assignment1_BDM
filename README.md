@@ -197,6 +197,7 @@ The backend exposes API endpoints to retrieve and analyze database data, includi
 - /api/ngos
 - /api/donations
 - /api/business-analysis
+- /api/customers
 
 These endpoints are consumed by the frontend JavaScript to display data dynamically.
 
