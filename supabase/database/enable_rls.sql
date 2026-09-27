@@ -1,9 +1,10 @@
--- Allow the website to READ the four Plate 2 Plate tables
+-- Allow the website to READ the five Plate 2 Plate tables
 
 ALTER TABLE public.food_waste ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.bakeries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ngos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.donations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.customers ENABLE ROW LEVEL SECURITY;
 
 
 CREATE POLICY "Allow public read food waste"
