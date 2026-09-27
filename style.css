@@ -615,3 +615,59 @@ footer {
     }
 
 }
+
+/* =====================================
+   DATABASE TABLES
+===================================== */
+
+.table-container {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+    background: white;
+}
+
+.data-table th {
+    padding: 14px 16px;
+    text-align: left;
+    background: #2e7d32;
+    color: white;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #e1e6df;
+    color: #37474f;
+    white-space: nowrap;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #f8faf7;
+}
+
+.data-table tbody tr:hover {
+    background: #edf5eb;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.analysis-table {
+    min-width: 550px;
+}
