@@ -1,22 +1,37 @@
+# ============================================================
+# PLATE 2 PLATE
+# FASTAPI BACKEND
+# SUPABASE POSTGRESQL + BUSINESS ANALYSIS
+# ============================================================
+
+
+from pathlib import Path
+import os
+
+import pandas as pd
+import psycopg2
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from dotenv import load_dotenv
-
-import os
-import psycopg2
-import pandas as pd
-
 
 # ============================================================
-# 1. LOAD ENVIRONMENT
+# 1. PATHS AND ENVIRONMENT
 # ============================================================
 
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL was not found in the project-root .env file."
+    )
 
 
 # ============================================================
@@ -24,15 +39,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # ============================================================
 
 app = FastAPI(
-    title="Plate 2 Plate",
-    description="Food Waste Reduction Business Analysis API",
-    version="1.0"
+    title="Plate 2 Plate API",
+    description="Food waste reduction and redistribution platform",
+    version="1.0.0"
 )
 
-
-# ============================================================
-# 3. CORS
-# ============================================================
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,110 +55,106 @@ app.add_middleware(
 
 
 # ============================================================
-# 4. FRONTEND FILES
+# 3. STATIC FILES
 # ============================================================
 
-# Serve assets folder
-if os.path.exists("assets"):
+ASSETS_DIR = BASE_DIR / "assets"
+
+if ASSETS_DIR.exists():
     app.mount(
         "/assets",
-        StaticFiles(directory="assets"),
+        StaticFiles(directory=str(ASSETS_DIR)),
         name="assets"
     )
 
 
+# ============================================================
+# 4. DATABASE CONNECTION
+# ============================================================
+
+def get_connection():
+    return psycopg2.connect(DATABASE_URL)
+
+
+# ============================================================
+# 5. HOME PAGE & FRONTEND ASSET ROUTES
+# ============================================================
+
 @app.get("/")
-def serve_frontend():
-    return FileResponse("index.html")
+def home():
+
+    index_file = BASE_DIR / "index.html"
+
+    if not index_file.exists():
+        return {
+            "message": "Plate 2 Plate API is running",
+            "error": "index.html not found"
+        }
+
+    return FileResponse(index_file)
 
 
 @app.get("/style.css")
 def serve_css():
-    return FileResponse("style.css")
+
+    css_file = BASE_DIR / "style.css"
+
+    if not css_file.exists():
+        return {
+            "error": "style.css not found"
+        }
+
+    return FileResponse(css_file)
 
 
 @app.get("/script.js")
-def serve_script():
-    return FileResponse("script.js")
+def serve_javascript():
+
+    js_file = BASE_DIR / "script.js"
+
+    if not js_file.exists():
+        return {
+            "error": "script.js not found"
+        }
+
+    return FileResponse(js_file)
 
 
 # ============================================================
-# 5. DATABASE CONNECTION
-# ============================================================
-
-def get_connection():
-
-    if not DATABASE_URL:
-        raise Exception(
-            "DATABASE_URL is missing from .env"
-        )
-
-    return psycopg2.connect(
-        DATABASE_URL
-    )
-
-
-# ============================================================
-# 6. HELPER - CONVERT DATABASE DATA TO JSON
-# ============================================================
-
-def clean_records(df):
-
-    if df.empty:
-        return []
-
-    # Replace NaN / NaT with None
-    df = df.where(
-        pd.notnull(df),
-        None
-    )
-
-    records = df.to_dict(
-        orient="records"
-    )
-
-    return records
-
-
-# ============================================================
-# 7. API STATUS
+# 6. API STATUS & HEALTH
 # ============================================================
 
 @app.get("/api")
-def api_status():
+def api_home():
 
     return {
+        "success": True,
         "message": "Plate 2 Plate API is running"
     }
 
 
 # ============================================================
-# 8. DATABASE CONNECTION TEST
+# 7. DATABASE CONNECTION TEST
 # ============================================================
 
 @app.get("/api/connection")
 def test_connection():
 
     connection = None
+    cursor = None
 
     try:
 
         connection = get_connection()
-
         cursor = connection.cursor()
 
-        cursor.execute(
-            "SELECT 1"
-        )
+        cursor.execute("SELECT 1;")
 
         result = cursor.fetchone()
 
-        cursor.close()
-
         return {
             "connected": True,
-            "message":
-                "Supabase PostgreSQL connected successfully",
+            "message": "Supabase PostgreSQL connected successfully",
             "result": result[0]
         }
 
@@ -155,12 +162,67 @@ def test_connection():
 
         return {
             "connected": False,
-            "message":
-                "Database connection failed",
+            "message": "Database connection failed",
             "error": str(error)
         }
 
     finally:
+
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+
+# ============================================================
+# 8. LIVE DATABASE STATS (FOR VIVA / PROOF)
+# ============================================================
+
+@app.get("/api/database-stats")
+def get_database_stats():
+
+    connection = None
+    cursor = None
+
+    try:
+
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT COUNT(*) FROM food_waste;")
+        food_waste_rows = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM bakeries;")
+        bakeries_rows = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM ngos;")
+        ngos_rows = cursor.fetchone()[0]
+
+        cursor.execute("SELECT COUNT(*) FROM donations;")
+        donations_rows = cursor.fetchone()[0]
+
+        return {
+            "success": True,
+            "row_counts": {
+                "food_waste": food_waste_rows,
+                "bakeries": bakeries_rows,
+                "ngos": ngos_rows,
+                "donations": donations_rows
+            }
+        }
+
+    except Exception as error:
+
+        return {
+            "success": False,
+            "error": str(error)
+        }
+
+    finally:
+
+        if cursor:
+            cursor.close()
 
         if connection:
             connection.close()
@@ -180,17 +242,25 @@ def get_surplus_food():
         connection = get_connection()
 
         query = """
-        SELECT *
+        SELECT
+            "Bakery ID",
+            "Product Name",
+            "Food Category",
+            "Quantity Available",
+            "Daily Surplus Quantity",
+            "Average Daily Sales",
+            "Average Daily Waste",
+            "Donation Available (Yes/No)",
+            "City"
         FROM food_waste
         ORDER BY "Daily Surplus Quantity" DESC;
         """
 
-        df = pd.read_sql(
-            query,
-            connection
-        )
+        df = pd.read_sql(query, connection)
 
-        return clean_records(df)
+        df = df.where(pd.notnull(df), None)
+
+        return df.to_dict(orient="records")
 
     except Exception as error:
 
@@ -223,7 +293,9 @@ def get_bakeries():
             connection
         )
 
-        return clean_records(df)
+        df = df.where(pd.notnull(df), None)
+
+        return df.to_dict(orient="records")
 
     except Exception as error:
 
@@ -239,7 +311,7 @@ def get_bakeries():
 
 
 # ============================================================
-# 11. NGOs
+# 11. NGOS
 # ============================================================
 
 @app.get("/api/ngos")
@@ -256,7 +328,9 @@ def get_ngos():
             connection
         )
 
-        return clean_records(df)
+        df = df.where(pd.notnull(df), None)
+
+        return df.to_dict(orient="records")
 
     except Exception as error:
 
@@ -289,7 +363,9 @@ def get_donations():
             connection
         )
 
-        return clean_records(df)
+        df = df.where(pd.notnull(df), None)
+
+        return df.to_dict(orient="records")
 
     except Exception as error:
 
@@ -305,7 +381,7 @@ def get_donations():
 
 
 # ============================================================
-# 13. COMPLETE BUSINESS ANALYSIS
+# 13. BUSINESS ANALYSIS
 # ============================================================
 
 @app.get("/api/business-analysis")
@@ -317,9 +393,9 @@ def business_analysis():
 
         connection = get_connection()
 
-        # ====================================================
-        # LOAD FOOD WASTE DATA
-        # ====================================================
+        # --------------------------------------------------------
+        # FOOD WASTE DATA
+        # --------------------------------------------------------
 
         food_waste_query = """
         SELECT
@@ -335,70 +411,100 @@ def business_analysis():
         FROM food_waste;
         """
 
-        food_waste = pd.read_sql(
+        df = pd.read_sql(
             food_waste_query,
             connection
         )
 
 
-        # ====================================================
-        # LOAD DONATIONS
-        # ====================================================
+        # --------------------------------------------------------
+        # NUMERIC CLEANING
+        # --------------------------------------------------------
+
+        numeric_columns = [
+            "Quantity Available",
+            "Daily Surplus Quantity",
+            "Average Daily Sales",
+            "Average Daily Waste"
+        ]
+
+        for column in numeric_columns:
+
+            df[column] = pd.to_numeric(
+                df[column],
+                errors="coerce"
+            ).fillna(0)
+
+
+        # --------------------------------------------------------
+        # TEXT CLEANING
+        # --------------------------------------------------------
+
+        df["Product Name"] = (
+            df["Product Name"]
+            .fillna("Unknown Product")
+            .astype(str)
+            .str.strip()
+        )
+
+        df["Food Category"] = (
+            df["Food Category"]
+            .fillna("Unknown")
+            .astype(str)
+            .str.strip()
+        )
+
+        df["Donation Available (Yes/No)"] = (
+            df["Donation Available (Yes/No)"]
+            .fillna("Unknown")
+            .astype(str)
+            .str.strip()
+        )
+
+
+        # --------------------------------------------------------
+        # OVERALL METRICS
+        # --------------------------------------------------------
+
+        total_surplus = (
+            df["Daily Surplus Quantity"].sum()
+        )
+
+        total_waste = (
+            df["Average Daily Waste"].sum()
+        )
+
+
+        # --------------------------------------------------------
+        # ACTUAL DONATIONS
+        # --------------------------------------------------------
 
         donation_query = """
         SELECT
-            donation_id,
-            bakery_id,
-            ngo_id,
-            quantity_donated,
-            pickup_status
+            COALESCE(SUM(quantity_donated), 0)
+            AS total_donations
         FROM donations;
         """
 
-        donations = pd.read_sql(
+        donation_df = pd.read_sql(
             donation_query,
             connection
         )
 
-
-        # ====================================================
-        # BASIC METRICS
-        # ====================================================
-
-        total_surplus = (
-            food_waste[
-                "Daily Surplus Quantity"
-            ]
-            .fillna(0)
-            .sum()
-        )
-
-        total_waste = (
-            food_waste[
-                "Average Daily Waste"
-            ]
-            .fillna(0)
-            .sum()
-        )
-
-        total_donated = (
-            donations[
-                "quantity_donated"
-            ]
-            .fillna(0)
-            .sum()
+        total_donations = float(
+            donation_df.iloc[0]["total_donations"]
         )
 
 
-        # ====================================================
-        # DONATION-TO-SURPLUS RATIO
-        # ====================================================
+        # --------------------------------------------------------
+        # DONATION RATE
+        # --------------------------------------------------------
 
         if total_surplus > 0:
 
             donation_rate = (
-                total_donated
-                / total_surplus
+                total_donations /
+                total_surplus
             ) * 100
 
         else:
@@ -406,16 +512,72 @@ def business_analysis():
             donation_rate = 0
 
 
-        # ====================================================
+        # --------------------------------------------------------
+        # HIGHEST SURPLUS CATEGORY
+        # --------------------------------------------------------
+
+        category_surplus = (
+            df.groupby("Food Category")
+            ["Daily Surplus Quantity"]
+            .sum()
+            .sort_values(ascending=False)
+        )
+
+        highest_surplus_category = (
+            str(category_surplus.index[0])
+            if not category_surplus.empty
+            else "N/A"
+        )
+
+
+        # --------------------------------------------------------
+        # HIGHEST WASTE CATEGORY
+        # --------------------------------------------------------
+
+        category_waste = (
+            df.groupby("Food Category")
+            ["Average Daily Waste"]
+            .sum()
+            .sort_values(ascending=False)
+        )
+
+        highest_waste_category = (
+            str(category_waste.index[0])
+            if not category_waste.empty
+            else "N/A"
+        )
+
+
+        # --------------------------------------------------------
+        # TOP BAKERIES
+        # --------------------------------------------------------
+
+        bakery_surplus = (
+            df.groupby("Bakery ID")
+            ["Daily Surplus Quantity"]
+            .sum()
+            .sort_values(ascending=False)
+            .head(10)
+        )
+
+        top_bakeries = [
+            {
+                "bakery_id": str(b_id),
+                "surplus_quantity": float(surplus)
+            }
+
+            for b_id, surplus
+            in bakery_surplus.items()
+        ]
+
+
+        # --------------------------------------------------------
         # FOOD CATEGORY ANALYSIS
-        # ====================================================
+        # --------------------------------------------------------
 
         category_analysis = (
-
-            food_waste
-            .groupby("Food Category")
+            df.groupby("Food Category")
             .agg(
-
                 total_surplus=(
                     "Daily Surplus Quantity",
                     "sum"
@@ -430,7 +592,6 @@ def business_analysis():
                     "Average Daily Sales",
                     "mean"
                 )
-
             )
             .sort_values(
                 "total_surplus",
@@ -443,255 +604,117 @@ def business_analysis():
 
         for category, row in category_analysis.iterrows():
 
-            category_records.append({
+            category_records.append(
+                {
+                    "category": str(category),
 
-                "category":
-                    str(category),
-
-                "total_surplus":
-                    float(
+                    "total_surplus": float(
                         row["total_surplus"]
                     ),
 
-                "total_waste":
-                    float(
+                    "total_waste": float(
                         row["total_waste"]
                     ),
 
-                "average_sales":
-                    round(
-                        float(
-                            row["average_sales"]
-                        ),
+                    "average_sales": round(
+                        float(row["average_sales"]),
                         2
                     )
-
-            })
-
-
-        # ====================================================
-        # HIGHEST SURPLUS CATEGORY
-        # ====================================================
-
-        if len(category_analysis) > 0:
-
-            highest_surplus_category = (
-                str(
-                    category_analysis.index[0]
-                )
+                }
             )
 
-        else:
 
-            highest_surplus_category = "N/A"
-
-
-        # ====================================================
-        # HIGHEST WASTE CATEGORY
-        # ====================================================
-
-        category_waste = (
-
-            food_waste
-            .groupby("Food Category")
-            ["Average Daily Waste"]
-            .mean()
-            .sort_values(
-                ascending=False
-            )
-        )
-
-        if len(category_waste) > 0:
-
-            highest_waste_category = (
-                str(
-                    category_waste.index[0]
-                )
-            )
-
-        else:
-
-            highest_waste_category = "N/A"
-
-
-        # ====================================================
-        # TOP BAKERIES BY SURPLUS
-        # ====================================================
-
-        bakery_surplus = (
-
-            food_waste
-            .groupby("Bakery ID")
-            ["Daily Surplus Quantity"]
-            .sum()
-            .sort_values(
-                ascending=False
-            )
-        )
-
-        top_bakeries = []
-
-        for bakery_id, value in (
-            bakery_surplus
-            .head(10)
-            .items()
-        ):
-
-            top_bakeries.append({
-
-                "bakery_id":
-                    str(bakery_id),
-
-                "surplus_quantity":
-                    float(value)
-
-            })
-
-
-        # ====================================================
+        # --------------------------------------------------------
         # HIGH-WASTE PRODUCTS
-        # ====================================================
+        # --------------------------------------------------------
 
-        high_waste = (
-
-            food_waste[
-                [
-                    "Product Name",
-                    "Food Category",
-                    "Average Daily Waste"
-                ]
-            ]
-            .sort_values(
-                "Average Daily Waste",
-                ascending=False
-            )
-            .head(10)
-        )
-
-        high_waste_products = []
-
-        for _, row in high_waste.iterrows():
-
-            high_waste_products.append({
-
-                "product":
-                    str(row["Product Name"]),
-
-                "category":
-                    str(row["Food Category"]),
-
-                "waste":
-                    float(
-                        row[
-                            "Average Daily Waste"
-                        ]
-                    )
-
-            })
-
-
-        # ====================================================
-        # HIGH-SURPLUS PRODUCTS
-        # ====================================================
-
-        high_surplus = (
-
-            food_waste[
-                [
-                    "Product Name",
-                    "Food Category",
-                    "Daily Surplus Quantity"
-                ]
-            ]
-            .sort_values(
-                "Daily Surplus Quantity",
-                ascending=False
-            )
-            .head(10)
-        )
-
-        high_surplus_products = []
-
-        for _, row in high_surplus.iterrows():
-
-            high_surplus_products.append({
-
-                "product":
-                    str(row["Product Name"]),
-
-                "category":
-                    str(row["Food Category"]),
-
-                "surplus":
-                    float(
-                        row[
-                            "Daily Surplus Quantity"
-                        ]
-                    )
-
-            })
-
-
-        # ====================================================
-        # DONATION AVAILABILITY
-        # ====================================================
-
-        donation_analysis = (
-
-            food_waste
-            .groupby(
-                "Donation Available (Yes/No)"
+        high_waste_products = (
+            df.groupby(
+                ["Product Name", "Food Category"],
+                as_index=False
             )
             .agg(
-
-                products=(
-                    "Product Name",
-                    "count"
-                ),
-
-                total_surplus=(
-                    "Daily Surplus Quantity",
-                    "sum"
-                ),
-
                 total_waste=(
                     "Average Daily Waste",
                     "sum"
                 )
-
             )
+            .sort_values(
+                "total_waste",
+                ascending=False
+            )
+            .head(10)
         )
 
-        donation_availability = []
 
-        for status, row in (
-            donation_analysis.iterrows()
-        ):
+        high_waste_records = []
 
-            donation_availability.append({
+        for _, row in high_waste_products.iterrows():
 
-                "status":
-                    str(status),
-
-                "products":
-                    int(row["products"]),
-
-                "total_surplus":
-                    float(
-                        row["total_surplus"]
+            high_waste_records.append(
+                {
+                    "product": str(
+                        row["Product Name"]
                     ),
 
-                "total_waste":
-                    float(
+                    "category": str(
+                        row["Food Category"]
+                    ),
+
+                    "waste": float(
                         row["total_waste"]
                     )
+                }
+            )
 
-            })
+
+        # --------------------------------------------------------
+        # HIGH-SURPLUS PRODUCTS
+        # --------------------------------------------------------
+
+        high_surplus_products = (
+            df.groupby(
+                ["Product Name", "Food Category"],
+                as_index=False
+            )
+            .agg(
+                total_surplus=(
+                    "Daily Surplus Quantity",
+                    "sum"
+                )
+            )
+            .sort_values(
+                "total_surplus",
+                ascending=False
+            )
+            .head(10)
+        )
 
 
-        # ====================================================
-        # RETURN ONE COMPLETE BUSINESS ANALYSIS
-        # ====================================================
+        high_surplus_records = []
+
+        for _, row in high_surplus_products.iterrows():
+
+            high_surplus_records.append(
+                {
+                    "product": str(
+                        row["Product Name"]
+                    ),
+
+                    "category": str(
+                        row["Food Category"]
+                    ),
+
+                    "surplus": float(
+                        row["total_surplus"]
+                    )
+                }
+            )
+
+
+        # --------------------------------------------------------
+        # FINAL BUSINESS ANALYSIS RESPONSE
+        # --------------------------------------------------------
 
         return {
 
@@ -699,31 +722,27 @@ def business_analysis():
 
             "metrics": {
 
-                "total_surplus":
-                    round(
-                        float(total_surplus),
-                        2
-                    ),
+                "total_surplus": round(
+                    float(total_surplus),
+                    2
+                ),
 
-                "total_waste":
-                    round(
-                        float(total_waste),
-                        2
-                    ),
+                "total_waste": round(
+                    float(total_waste),
+                    2
+                ),
 
-                "total_donations":
-                    round(
-                        float(total_donated),
-                        2
-                    ),
+                "total_donations": round(
+                    float(total_donations),
+                    2
+                ),
 
-                "donation_rate":
-                    round(
-                        float(donation_rate),
-                        2
-                    )
-
+                "donation_rate": round(
+                    float(donation_rate),
+                    2
+                )
             },
+
 
             "key_findings": {
 
@@ -732,24 +751,23 @@ def business_analysis():
 
                 "highest_waste_category":
                     highest_waste_category
-
             },
+
 
             "top_bakeries":
                 top_bakeries,
 
+
             "category_analysis":
                 category_records,
 
+
             "high_waste_products":
-                high_waste_products,
+                high_waste_records,
+
 
             "high_surplus_products":
-                high_surplus_products,
-
-            "donation_availability":
-                donation_availability
-
+                high_surplus_records
         }
 
 
@@ -760,7 +778,6 @@ def business_analysis():
             "success": False,
 
             "error": str(error)
-
         }
 
 

@@ -112,9 +112,11 @@ async function loadSurplusFood() {
             await response.json();
 
         if (!response.ok || data.success === false) {
+
             throw new Error(
                 data.error || "Unable to load surplus food"
             );
+
         }
 
         container.innerHTML = "";
@@ -125,6 +127,7 @@ async function loadSurplusFood() {
                 "<p>No surplus food found.</p>";
 
             return;
+
         }
 
         data.forEach(food => {
@@ -215,9 +218,11 @@ async function loadBakeries() {
             await response.json();
 
         if (!response.ok || data.success === false) {
+
             throw new Error(
                 data.error || "Unable to load bakeries"
             );
+
         }
 
         container.innerHTML = "";
@@ -228,6 +233,7 @@ async function loadBakeries() {
                 "<p>No bakeries found.</p>";
 
             return;
+
         }
 
         data.forEach(bakery => {
@@ -308,9 +314,11 @@ async function loadNGOs() {
             await response.json();
 
         if (!response.ok || data.success === false) {
+
             throw new Error(
                 data.error || "Unable to load NGOs"
             );
+
         }
 
         container.innerHTML = "";
@@ -321,6 +329,7 @@ async function loadNGOs() {
                 "<p>No NGOs found.</p>";
 
             return;
+
         }
 
         data.forEach(ngo => {
@@ -396,9 +405,11 @@ async function loadDonations() {
             await response.json();
 
         if (!response.ok || data.success === false) {
+
             throw new Error(
                 data.error || "Unable to load donations"
             );
+
         }
 
         container.innerHTML = "";
@@ -409,6 +420,7 @@ async function loadDonations() {
                 "<p>No donations found.</p>";
 
             return;
+
         }
 
         data.forEach(donation => {
@@ -479,10 +491,6 @@ async function loadBusinessAnalysis() {
 
     try {
 
-        // IMPORTANT:
-        // We no longer read:
-        // results/analysis/business_analysis.json
-        //
         // Everything now comes from FastAPI.
 
         const response =
@@ -868,79 +876,6 @@ async function loadBusinessAnalysis() {
 
 
         // ====================================================
-        // DONATION AVAILABILITY
-        // ====================================================
-
-        const donationContainer =
-            document.getElementById(
-                "donation-availability-container"
-            );
-
-        if (donationContainer) {
-
-            donationContainer.innerHTML = "";
-
-            if (
-                data.donation_availability &&
-                data.donation_availability.length > 0
-            ) {
-
-                data.donation_availability.forEach(
-                    item => {
-
-                        const row =
-                            document.createElement(
-                                "div"
-                            );
-
-                        row.className =
-                            "analysis-row";
-
-                        row.innerHTML = `
-
-                            <p>
-                                <strong>
-                                    Donation Available:
-                                    ${item.status}
-                                </strong>
-                            </p>
-
-                            <p>
-                                Products:
-                                ${item.products}
-                            </p>
-
-                            <p>
-                                Total Surplus:
-                                ${item.total_surplus}
-                            </p>
-
-                            <p>
-                                Total Waste:
-                                ${item.total_waste}
-                            </p>
-
-                        `;
-
-                        donationContainer
-                            .appendChild(row);
-
-                    }
-                );
-
-            }
-
-            else {
-
-                donationContainer.innerHTML =
-                    "<p>No donation availability analysis available.</p>";
-
-            }
-
-        }
-
-
-        // ====================================================
         // REMOVE OLD UNUSED ANALYSIS SECTIONS
         // ====================================================
 
@@ -1016,8 +951,7 @@ async function loadBusinessAnalysis() {
             "top-bakeries-container",
             "deeper-category-container",
             "high-waste-container",
-            "high-surplus-container",
-            "donation-availability-container"
+            "high-surplus-container"
 
         ];
 
