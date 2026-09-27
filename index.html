@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Plate 2 Plate</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">🍽️ Plate 2 Plate</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#surplus">Surplus Food</a>
+            <a href="#bakeries">Bakeries</a>
+            <a href="#ngos">NGOs</a>
+            <a href="#donations">Donations</a>
+        </nav>
+    </header>
+
+
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <h1>Plate 2 Plate</h1>
+
+            <h2>Reducing Food Waste. Feeding Communities.</h2>
+
+            <p>
+                A food redistribution platform connecting bakeries,
+                surplus food, and NGOs to reduce food waste and
+                support communities in need.
+            </p>
+
+            <div class="buttons">
+
+                <button onclick="showSection('surplus')">
+                    View Surplus Food
+                </button>
+
+                <button onclick="showSection('ngos')">
+                    Find NGOs
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="surplus" class="section">
+
+        <h2>🍞 Available Surplus Food</h2>
+
+        <p>Food available for redistribution from bakeries.</p>
+
+        <div id="surplus-container" class="cards">
+
+            <p>Loading surplus food...</p>
+
+        </div>
+
+    </section>
+
+
+    <section id="bakeries" class="section">
+
+        <h2>🏪 Partner Bakeries</h2>
+
+        <div id="bakery-container" class="cards">
+
+            <p>Loading bakeries...</p>
+
+        </div>
+
+    </section>
+
+
+    <section id="ngos" class="section">
+
+        <h2>🤝 NGOs</h2>
+
+        <div id="ngo-container" class="cards">
+
+            <p>Loading NGOs...</p>
+
+        </div>
+
+    </section>
+
+
+    <section id="donations" class="section">
+
+        <h2>🎁 Donations</h2>
+
+        <div id="donation-container" class="cards">
+
+            <p>Loading donations...</p>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <p>© 2026 Plate 2 Plate | Food Waste Reduction Initiative</p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
