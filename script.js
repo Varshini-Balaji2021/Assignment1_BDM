@@ -89,7 +89,7 @@ async function testBackendConnection() {
 // DATABASE TABLE HELPER
 // ============================================================
 
-function renderDatabaseTable(container, data, emptyMessage) {
+function renderDatabaseTable(container, data, emptyMessage, limit = 15) {
 
     if (!container) return;
 
@@ -98,7 +98,8 @@ function renderDatabaseTable(container, data, emptyMessage) {
         return;
     }
 
-    const columns = Object.keys(data[0]);
+    const displayData = data.slice(0, limit);
+    const columns = Object.keys(displayData[0]);
 
     const table = document.createElement("table");
     table.className = "data-table";
@@ -119,7 +120,7 @@ function renderDatabaseTable(container, data, emptyMessage) {
 
     const tbody = document.createElement("tbody");
 
-    data.forEach(record => {
+    displayData.forEach(record => {
         const row = document.createElement("tr");
 
         columns.forEach(column => {
