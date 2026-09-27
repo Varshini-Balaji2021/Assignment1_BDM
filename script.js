@@ -89,63 +89,119 @@ async function testBackendConnection() {
 // DATABASE TABLE HELPER
 // ============================================================
 
-function renderDatabaseTable(container, data, emptyMessage, limit = 15) {
+function renderDatabaseTable(
+    container,
+    data,
+    emptyMessage,
+    limit = 15
+) {
 
     if (!container) return;
 
     if (!Array.isArray(data) || data.length === 0) {
-        container.innerHTML = `<p>${emptyMessage}</p>`;
+
+        container.innerHTML =
+            `<p>${emptyMessage}</p>`;
+
         return;
     }
 
-    const displayData = data.slice(0, limit);
-    const columns = Object.keys(displayData[0]);
+    // Display only the requested number of records
+    const displayData =
+        data.slice(0, limit);
 
-    const table = document.createElement("table");
-    table.className = "data-table";
+    const columns =
+        Object.keys(displayData[0]);
 
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
+    const table =
+        document.createElement("table");
+
+    table.className =
+        "data-table";
+
+    const thead =
+        document.createElement("thead");
+
+    const headerRow =
+        document.createElement("tr");
+
 
     columns.forEach(column => {
-        const th = document.createElement("th");
-        th.textContent = column
-            .replace(/_/g, " ")
-            .replace(/\b\w/g, letter => letter.toUpperCase());
+
+        const th =
+            document.createElement("th");
+
+        th.textContent =
+            column
+                .replace(/_/g, " ")
+                .replace(
+                    /\b\w/g,
+                    letter => letter.toUpperCase()
+                );
+
         headerRow.appendChild(th);
+
     });
 
+
     thead.appendChild(headerRow);
+
     table.appendChild(thead);
 
-    const tbody = document.createElement("tbody");
+
+    const tbody =
+        document.createElement("tbody");
+
 
     displayData.forEach(record => {
-        const row = document.createElement("tr");
+
+        const row =
+            document.createElement("tr");
+
 
         columns.forEach(column => {
-            const td = document.createElement("td");
-            const value = record[column];
+
+            const td =
+                document.createElement("td");
+
+            const value =
+                record[column];
+
 
             td.textContent =
-                value === null || value === undefined || value === ""
+                value === null ||
+                value === undefined ||
+                value === ""
                     ? "-"
                     : value;
 
+
             row.appendChild(td);
+
         });
 
+
         tbody.appendChild(row);
+
     });
+
 
     table.appendChild(tbody);
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "table-wrapper";
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "table-wrapper";
+
     wrapper.appendChild(table);
 
+
     container.innerHTML = "";
+
     container.appendChild(wrapper);
+
 }
 
 
@@ -155,19 +211,38 @@ function renderDatabaseTable(container, data, emptyMessage, limit = 15) {
 
 async function loadSurplusFood() {
 
-    const container = document.getElementById("surplus-container");
+    const container =
+        document.getElementById(
+            "surplus-container"
+        );
 
     if (!container) return;
 
-    container.innerHTML = "<p>Loading surplus food...</p>";
+    container.innerHTML =
+        "<p>Loading surplus food...</p>";
+
 
     try {
-        const response = await fetch("/api/surplus");
-        const data = await response.json();
 
-        if (!response.ok || data.success === false) {
-            throw new Error(data.error || "Unable to load surplus food");
+        const response =
+            await fetch("/api/surplus");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success === false
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load surplus food"
+            );
+
         }
+
 
         renderDatabaseTable(
             container,
@@ -175,11 +250,20 @@ async function loadSurplusFood() {
             "No surplus food found."
         );
 
-    } catch (error) {
-        console.error("Surplus error:", error);
+    }
+
+    catch (error) {
+
+        console.error(
+            "Surplus error:",
+            error
+        );
+
         container.innerHTML =
             "<p>❌ Unable to load surplus food.</p>";
+
     }
+
 }
 
 
@@ -189,19 +273,38 @@ async function loadSurplusFood() {
 
 async function loadBakeries() {
 
-    const container = document.getElementById("bakery-container");
+    const container =
+        document.getElementById(
+            "bakery-container"
+        );
 
     if (!container) return;
 
-    container.innerHTML = "<p>Loading bakeries...</p>";
+    container.innerHTML =
+        "<p>Loading bakeries...</p>";
+
 
     try {
-        const response = await fetch("/api/bakeries");
-        const data = await response.json();
 
-        if (!response.ok || data.success === false) {
-            throw new Error(data.error || "Unable to load bakeries");
+        const response =
+            await fetch("/api/bakeries");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success === false
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load bakeries"
+            );
+
         }
+
 
         renderDatabaseTable(
             container,
@@ -209,11 +312,20 @@ async function loadBakeries() {
             "No bakeries found."
         );
 
-    } catch (error) {
-        console.error("Bakery error:", error);
+    }
+
+    catch (error) {
+
+        console.error(
+            "Bakery error:",
+            error
+        );
+
         container.innerHTML =
             "<p>❌ Unable to load bakeries.</p>";
+
     }
+
 }
 
 
@@ -223,19 +335,38 @@ async function loadBakeries() {
 
 async function loadNGOs() {
 
-    const container = document.getElementById("ngo-container");
+    const container =
+        document.getElementById(
+            "ngo-container"
+        );
 
     if (!container) return;
 
-    container.innerHTML = "<p>Loading NGOs...</p>";
+    container.innerHTML =
+        "<p>Loading NGOs...</p>";
+
 
     try {
-        const response = await fetch("/api/ngos");
-        const data = await response.json();
 
-        if (!response.ok || data.success === false) {
-            throw new Error(data.error || "Unable to load NGOs");
+        const response =
+            await fetch("/api/ngos");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success === false
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load NGOs"
+            );
+
         }
+
 
         renderDatabaseTable(
             container,
@@ -243,11 +374,20 @@ async function loadNGOs() {
             "No NGOs found."
         );
 
-    } catch (error) {
-        console.error("NGO error:", error);
+    }
+
+    catch (error) {
+
+        console.error(
+            "NGO error:",
+            error
+        );
+
         container.innerHTML =
             "<p>❌ Unable to load NGOs.</p>";
+
     }
+
 }
 
 
@@ -257,19 +397,38 @@ async function loadNGOs() {
 
 async function loadDonations() {
 
-    const container = document.getElementById("donation-container");
+    const container =
+        document.getElementById(
+            "donation-container"
+        );
 
     if (!container) return;
 
-    container.innerHTML = "<p>Loading donations...</p>";
+    container.innerHTML =
+        "<p>Loading donations...</p>";
+
 
     try {
-        const response = await fetch("/api/donations");
-        const data = await response.json();
 
-        if (!response.ok || data.success === false) {
-            throw new Error(data.error || "Unable to load donations");
+        const response =
+            await fetch("/api/donations");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success === false
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load donations"
+            );
+
         }
+
 
         renderDatabaseTable(
             container,
@@ -277,20 +436,89 @@ async function loadDonations() {
             "No donation records found."
         );
 
-    } catch (error) {
-        console.error("Donation error:", error);
+    }
+
+    catch (error) {
+
+        console.error(
+            "Donation error:",
+            error
+        );
+
         container.innerHTML =
             "<p>❌ Unable to load donations.</p>";
+
     }
+
 }
 
 
 // ============================================================
-// 7. COMPLETE BUSINESS ANALYSIS
+// 7. LOAD CUSTOMERS
 // ============================================================
 
+async function loadCustomers() {
+
+    const container =
+        document.getElementById(
+            "customer-container"
+        );
+
+    if (!container) return;
+
+    container.innerHTML =
+        "<p>Loading customers...</p>";
+
+
+    try {
+
+        const response =
+            await fetch("/api/customers");
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            data.success === false
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Unable to load customers"
+            );
+
+        }
+
+
+        // Display maximum 10 customer records
+        renderDatabaseTable(
+            container,
+            data,
+            "No customer records found.",
+            10
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Customer error:",
+            error
+        );
+
+        container.innerHTML =
+            "<p>❌ Unable to load customers.</p>";
+
+    }
+
+}
+
+
 // ============================================================
-// 7. COMPLETE BUSINESS ANALYSIS
+// 8. COMPLETE BUSINESS ANALYSIS
 // ============================================================
 
 async function loadBusinessAnalysis() {
@@ -299,14 +527,16 @@ async function loadBusinessAnalysis() {
         "Loading complete Business Analysis..."
     );
 
+
     try {
 
-        // Everything now comes from FastAPI.
+        // Everything now comes from FastAPI
 
         const response =
             await fetch(
                 "/api/business-analysis"
             );
+
 
         if (!response.ok) {
 
@@ -316,13 +546,16 @@ async function loadBusinessAnalysis() {
 
         }
 
+
         const data =
             await response.json();
+
 
         console.log(
             "Business Analysis:",
             data
         );
+
 
         if (!data.success) {
 
@@ -343,15 +576,18 @@ async function loadBusinessAnalysis() {
                 "business-total-surplus"
             );
 
+
         const totalWaste =
             document.getElementById(
                 "business-total-waste"
             );
 
+
         const totalDonated =
             document.getElementById(
                 "business-total-donated"
             );
+
 
         const donationRate =
             document.getElementById(
@@ -401,6 +637,7 @@ async function loadBusinessAnalysis() {
                 "highest-surplus-category"
             );
 
+
         const highestWasteCategory =
             document.getElementById(
                 "highest-waste-category"
@@ -411,7 +648,8 @@ async function loadBusinessAnalysis() {
 
             highestSurplusCategory.textContent =
                 data.key_findings
-                    .highest_surplus_category;
+                    ?.highest_surplus_category ||
+                "-";
 
         }
 
@@ -420,245 +658,738 @@ async function loadBusinessAnalysis() {
 
             highestWasteCategory.textContent =
                 data.key_findings
-                    .highest_waste_category;
+                    ?.highest_waste_category ||
+                "-";
 
         }
 
 
         // ====================================================
-        // ANALYTICAL TABLES
+        // TOP BAKERIES
         // ====================================================
 
-        const topbakeriescontainer = document.getElementById("top-bakeries-container");
+        const topBakeriesContainer =
+            document.getElementById(
+                "top-bakeries-container"
+            );
 
-        if (topbakeriescontainer) {
 
-            const rows = data.top_bakeries;
+        if (topBakeriesContainer) {
 
-            if (!Array.isArray(rows) || rows.length === 0) {
+            const rows =
+                data.top_bakeries;
 
-                topbakeriescontainer.innerHTML = "<p>No bakery analysis available.</p>";
 
-            } else {
+            if (
+                !Array.isArray(rows) ||
+                rows.length === 0
+            ) {
 
-                const table = document.createElement("table");
-                table.className = "data-table analysis-table";
+                topBakeriesContainer.innerHTML =
+                    "<p>No bakery analysis available.</p>";
 
-                const thead = document.createElement("thead");
-                const headerRow = document.createElement("tr");
+            }
 
-                [{"key":"bakery_id","label":"Bakery ID"},{"key":"surplus_quantity","label":"Surplus Quantity"}].forEach(column => {
-                    const th = document.createElement("th");
-                    th.textContent = column.label;
+            else {
+
+                const table =
+                    document.createElement(
+                        "table"
+                    );
+
+
+                table.className =
+                    "data-table analysis-table";
+
+
+                const thead =
+                    document.createElement(
+                        "thead"
+                    );
+
+
+                const headerRow =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                [
+                    {
+                        key: "bakery_name",
+                        label: "Bakery"
+                    },
+                    {
+                        key: "total_surplus",
+                        label: "Total Surplus"
+                    }
+                ].forEach(column => {
+
+                    const th =
+                        document.createElement(
+                            "th"
+                        );
+
+                    th.textContent =
+                        column.label;
+
                     headerRow.appendChild(th);
+
                 });
 
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
 
-                const tbody = document.createElement("tbody");
+                thead.appendChild(
+                    headerRow
+                );
+
+                table.appendChild(
+                    thead
+                );
+
+
+                const tbody =
+                    document.createElement(
+                        "tbody"
+                    );
+
 
                 rows.forEach(item => {
-                    const row = document.createElement("tr");
 
-                    [{"key":"bakery_id","label":"Bakery ID"},{"key":"surplus_quantity","label":"Surplus Quantity"}].forEach(column => {
-                        const td = document.createElement("td");
-                        const value = item[column.key];
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    [
+                        {
+                            key: "bakery_name",
+                            label: "Bakery"
+                        },
+                        {
+                            key: "total_surplus",
+                            label: "Total Surplus"
+                        }
+                    ].forEach(column => {
+
+                        const td =
+                            document.createElement(
+                                "td"
+                            );
+
+
+                        const value =
+                            item[column.key];
+
 
                         td.textContent =
-                            value === null || value === undefined || value === ""
+                            value === null ||
+                            value === undefined ||
+                            value === ""
                                 ? "-"
                                 : value;
 
+
                         row.appendChild(td);
+
                     });
 
+
                     tbody.appendChild(row);
+
                 });
 
-                table.appendChild(tbody);
 
-                const wrapper = document.createElement("div");
-                wrapper.className = "table-wrapper";
-                wrapper.appendChild(table);
+                table.appendChild(
+                    tbody
+                );
 
-                topbakeriescontainer.innerHTML = "";
-                topbakeriescontainer.appendChild(wrapper);
+
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrapper.className =
+                    "table-wrapper";
+
+
+                wrapper.appendChild(
+                    table
+                );
+
+
+                topBakeriesContainer.innerHTML =
+                    "";
+
+
+                topBakeriesContainer.appendChild(
+                    wrapper
+                );
+
             }
+
         }
 
-        const deepercategorycontainer = document.getElementById("deeper-category-container");
+
+        // ====================================================
+        // CATEGORY ANALYSIS
+        // ====================================================
+
+        const deepercategorycontainer =
+            document.getElementById(
+                "deeper-category-container"
+            );
+
 
         if (deepercategorycontainer) {
 
-            const rows = data.category_analysis;
+            const rows =
+                data.category_analysis;
 
-            if (!Array.isArray(rows) || rows.length === 0) {
 
-                deepercategorycontainer.innerHTML = "<p>No category analysis available.</p>";
+            if (
+                !Array.isArray(rows) ||
+                rows.length === 0
+            ) {
 
-            } else {
+                deepercategorycontainer.innerHTML =
+                    "<p>No category analysis available.</p>";
 
-                const table = document.createElement("table");
-                table.className = "data-table analysis-table";
+            }
 
-                const thead = document.createElement("thead");
-                const headerRow = document.createElement("tr");
+            else {
 
-                [{"key":"category","label":"Food Category"},{"key":"total_surplus","label":"Total Surplus"},{"key":"total_waste","label":"Total Waste"},{"key":"average_sales","label":"Average Daily Sales"}].forEach(column => {
-                    const th = document.createElement("th");
-                    th.textContent = column.label;
-                    headerRow.appendChild(th);
+                const table =
+                    document.createElement(
+                        "table"
+                    );
+
+
+                table.className =
+                    "data-table analysis-table";
+
+
+                const thead =
+                    document.createElement(
+                        "thead"
+                    );
+
+
+                const headerRow =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                [
+                    {
+                        key: "category",
+                        label: "Food Category"
+                    },
+                    {
+                        key: "total_surplus",
+                        label: "Total Surplus"
+                    },
+                    {
+                        key: "total_waste",
+                        label: "Total Waste"
+                    },
+                    {
+                        key: "average_sales",
+                        label: "Average Daily Sales"
+                    }
+                ].forEach(column => {
+
+                    const th =
+                        document.createElement(
+                            "th"
+                        );
+
+
+                    th.textContent =
+                        column.label;
+
+
+                    headerRow.appendChild(
+                        th
+                    );
+
                 });
 
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
 
-                const tbody = document.createElement("tbody");
+                thead.appendChild(
+                    headerRow
+                );
+
+
+                table.appendChild(
+                    thead
+                );
+
+
+                const tbody =
+                    document.createElement(
+                        "tbody"
+                    );
+
 
                 rows.forEach(item => {
-                    const row = document.createElement("tr");
 
-                    [{"key":"category","label":"Food Category"},{"key":"total_surplus","label":"Total Surplus"},{"key":"total_waste","label":"Total Waste"},{"key":"average_sales","label":"Average Daily Sales"}].forEach(column => {
-                        const td = document.createElement("td");
-                        const value = item[column.key];
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    [
+                        {
+                            key: "category",
+                            label: "Food Category"
+                        },
+                        {
+                            key: "total_surplus",
+                            label: "Total Surplus"
+                        },
+                        {
+                            key: "total_waste",
+                            label: "Total Waste"
+                        },
+                        {
+                            key: "average_sales",
+                            label: "Average Daily Sales"
+                        }
+                    ].forEach(column => {
+
+                        const td =
+                            document.createElement(
+                                "td"
+                            );
+
+
+                        const value =
+                            item[column.key];
+
 
                         td.textContent =
-                            value === null || value === undefined || value === ""
+                            value === null ||
+                            value === undefined ||
+                            value === ""
                                 ? "-"
                                 : value;
 
+
                         row.appendChild(td);
+
                     });
 
-                    tbody.appendChild(row);
+
+                    tbody.appendChild(
+                        row
+                    );
+
                 });
 
-                table.appendChild(tbody);
 
-                const wrapper = document.createElement("div");
-                wrapper.className = "table-wrapper";
-                wrapper.appendChild(table);
+                table.appendChild(
+                    tbody
+                );
 
-                deepercategorycontainer.innerHTML = "";
-                deepercategorycontainer.appendChild(wrapper);
+
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrapper.className =
+                    "table-wrapper";
+
+
+                wrapper.appendChild(
+                    table
+                );
+
+
+                deepercategorycontainer.innerHTML =
+                    "";
+
+
+                deepercategorycontainer.appendChild(
+                    wrapper
+                );
+
             }
+
         }
 
-        const highwastecontainer = document.getElementById("high-waste-container");
+
+        // ====================================================
+        // HIGH WASTE PRODUCTS
+        // ====================================================
+
+        const highwastecontainer =
+            document.getElementById(
+                "high-waste-container"
+            );
+
 
         if (highwastecontainer) {
 
-            const rows = data.high_waste_products;
+            const rows =
+                data.high_waste_products;
 
-            if (!Array.isArray(rows) || rows.length === 0) {
 
-                highwastecontainer.innerHTML = "<p>No high-waste products available.</p>";
+            if (
+                !Array.isArray(rows) ||
+                rows.length === 0
+            ) {
 
-            } else {
+                highwastecontainer.innerHTML =
+                    "<p>No high-waste products available.</p>";
 
-                const table = document.createElement("table");
-                table.className = "data-table analysis-table";
+            }
 
-                const thead = document.createElement("thead");
-                const headerRow = document.createElement("tr");
+            else {
 
-                [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"waste","label":"Average Daily Waste"}].forEach(column => {
-                    const th = document.createElement("th");
-                    th.textContent = column.label;
-                    headerRow.appendChild(th);
+                const table =
+                    document.createElement(
+                        "table"
+                    );
+
+
+                table.className =
+                    "data-table analysis-table";
+
+
+                const thead =
+                    document.createElement(
+                        "thead"
+                    );
+
+
+                const headerRow =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                [
+                    {
+                        key: "product",
+                        label: "Product"
+                    },
+                    {
+                        key: "category",
+                        label: "Category"
+                    },
+                    {
+                        key: "waste",
+                        label: "Average Daily Waste"
+                    }
+                ].forEach(column => {
+
+                    const th =
+                        document.createElement(
+                            "th"
+                        );
+
+
+                    th.textContent =
+                        column.label;
+
+
+                    headerRow.appendChild(
+                        th
+                    );
+
                 });
 
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
 
-                const tbody = document.createElement("tbody");
+                thead.appendChild(
+                    headerRow
+                );
+
+
+                table.appendChild(
+                    thead
+                );
+
+
+                const tbody =
+                    document.createElement(
+                        "tbody"
+                    );
+
 
                 rows.forEach(item => {
-                    const row = document.createElement("tr");
 
-                    [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"waste","label":"Average Daily Waste"}].forEach(column => {
-                        const td = document.createElement("td");
-                        const value = item[column.key];
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    [
+                        {
+                            key: "product",
+                            label: "Product"
+                        },
+                        {
+                            key: "category",
+                            label: "Category"
+                        },
+                        {
+                            key: "waste",
+                            label: "Average Daily Waste"
+                        }
+                    ].forEach(column => {
+
+                        const td =
+                            document.createElement(
+                                "td"
+                            );
+
+
+                        const value =
+                            item[column.key];
+
 
                         td.textContent =
-                            value === null || value === undefined || value === ""
+                            value === null ||
+                            value === undefined ||
+                            value === ""
                                 ? "-"
                                 : value;
 
+
                         row.appendChild(td);
+
                     });
 
-                    tbody.appendChild(row);
+
+                    tbody.appendChild(
+                        row
+                    );
+
                 });
 
-                table.appendChild(tbody);
 
-                const wrapper = document.createElement("div");
-                wrapper.className = "table-wrapper";
-                wrapper.appendChild(table);
+                table.appendChild(
+                    tbody
+                );
 
-                highwastecontainer.innerHTML = "";
-                highwastecontainer.appendChild(wrapper);
+
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrapper.className =
+                    "table-wrapper";
+
+
+                wrapper.appendChild(
+                    table
+                );
+
+
+                highwastecontainer.innerHTML =
+                    "";
+
+
+                highwastecontainer.appendChild(
+                    wrapper
+                );
+
             }
+
         }
 
-        const highsurpluscontainer = document.getElementById("high-surplus-container");
+
+        // ====================================================
+        // HIGH SURPLUS PRODUCTS
+        // ====================================================
+
+        const highsurpluscontainer =
+            document.getElementById(
+                "high-surplus-container"
+            );
+
 
         if (highsurpluscontainer) {
 
-            const rows = data.high_surplus_products;
+            const rows =
+                data.high_surplus_products;
 
-            if (!Array.isArray(rows) || rows.length === 0) {
 
-                highsurpluscontainer.innerHTML = "<p>No high-surplus products available.</p>";
+            if (
+                !Array.isArray(rows) ||
+                rows.length === 0
+            ) {
 
-            } else {
+                highsurpluscontainer.innerHTML =
+                    "<p>No high-surplus products available.</p>";
 
-                const table = document.createElement("table");
-                table.className = "data-table analysis-table";
+            }
 
-                const thead = document.createElement("thead");
-                const headerRow = document.createElement("tr");
+            else {
 
-                [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"surplus","label":"Daily Surplus"}].forEach(column => {
-                    const th = document.createElement("th");
-                    th.textContent = column.label;
-                    headerRow.appendChild(th);
+                const table =
+                    document.createElement(
+                        "table"
+                    );
+
+
+                table.className =
+                    "data-table analysis-table";
+
+
+                const thead =
+                    document.createElement(
+                        "thead"
+                    );
+
+
+                const headerRow =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                [
+                    {
+                        key: "product",
+                        label: "Product"
+                    },
+                    {
+                        key: "category",
+                        label: "Category"
+                    },
+                    {
+                        key: "surplus",
+                        label: "Daily Surplus"
+                    }
+                ].forEach(column => {
+
+                    const th =
+                        document.createElement(
+                            "th"
+                        );
+
+
+                    th.textContent =
+                        column.label;
+
+
+                    headerRow.appendChild(
+                        th
+                    );
+
                 });
 
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
 
-                const tbody = document.createElement("tbody");
+                thead.appendChild(
+                    headerRow
+                );
+
+
+                table.appendChild(
+                    thead
+                );
+
+
+                const tbody =
+                    document.createElement(
+                        "tbody"
+                    );
+
 
                 rows.forEach(item => {
-                    const row = document.createElement("tr");
 
-                    [{"key":"product","label":"Product"},{"key":"category","label":"Category"},{"key":"surplus","label":"Daily Surplus"}].forEach(column => {
-                        const td = document.createElement("td");
-                        const value = item[column.key];
+                    const row =
+                        document.createElement(
+                            "tr"
+                        );
+
+
+                    [
+                        {
+                            key: "product",
+                            label: "Product"
+                        },
+                        {
+                            key: "category",
+                            label: "Category"
+                        },
+                        {
+                            key: "surplus",
+                            label: "Daily Surplus"
+                        }
+                    ].forEach(column => {
+
+                        const td =
+                            document.createElement(
+                                "td"
+                            );
+
+
+                        const value =
+                            item[column.key];
+
 
                         td.textContent =
-                            value === null || value === undefined || value === ""
+                            value === null ||
+                            value === undefined ||
+                            value === ""
                                 ? "-"
                                 : value;
 
+
                         row.appendChild(td);
+
                     });
 
-                    tbody.appendChild(row);
+
+                    tbody.appendChild(
+                        row
+                    );
+
                 });
 
-                table.appendChild(tbody);
 
-                const wrapper = document.createElement("div");
-                wrapper.className = "table-wrapper";
-                wrapper.appendChild(table);
+                table.appendChild(
+                    tbody
+                );
 
-                highsurpluscontainer.innerHTML = "";
-                highsurpluscontainer.appendChild(wrapper);
+
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrapper.className =
+                    "table-wrapper";
+
+
+                wrapper.appendChild(
+                    table
+                );
+
+
+                highsurpluscontainer.innerHTML =
+                    "";
+
+
+                highsurpluscontainer.appendChild(
+                    wrapper
+                );
+
             }
+
         }
 
 
@@ -670,6 +1401,7 @@ async function loadBusinessAnalysis() {
             document.getElementById(
                 "waste-level-container"
             );
+
 
         if (wasteLevelContainer) {
 
@@ -683,6 +1415,7 @@ async function loadBusinessAnalysis() {
             document.getElementById(
                 "surplus-level-container"
             );
+
 
         if (surplusLevelContainer) {
 
@@ -723,6 +1456,7 @@ async function loadBusinessAnalysis() {
             const element =
                 document.getElementById(id);
 
+
             if (element) {
 
                 element.textContent =
@@ -748,6 +1482,7 @@ async function loadBusinessAnalysis() {
             const element =
                 document.getElementById(id);
 
+
             if (element) {
 
                 element.innerHTML =
@@ -763,7 +1498,7 @@ async function loadBusinessAnalysis() {
 
 
 // ============================================================
-// 8. START APPLICATION
+// 9. START APPLICATION
 // ============================================================
 
 async function loadApplication() {
@@ -788,6 +1523,7 @@ async function loadApplication() {
     const connected =
         await testBackendConnection();
 
+
     if (!connected) {
 
         console.error(
@@ -800,7 +1536,7 @@ async function loadApplication() {
 
 
     // --------------------------------------------------------
-    // EXISTING WEBSITE DATA
+    // WEBSITE DATA
     // --------------------------------------------------------
 
     await loadSurplusFood();
@@ -811,9 +1547,11 @@ async function loadApplication() {
 
     await loadDonations();
 
+    await loadCustomers();
+
 
     // --------------------------------------------------------
-    // ONE COMPLETE BUSINESS ANALYSIS
+    // COMPLETE BUSINESS ANALYSIS
     // --------------------------------------------------------
 
     await loadBusinessAnalysis();
@@ -827,7 +1565,7 @@ async function loadApplication() {
 
 
 // ============================================================
-// 9. START WHEN HTML IS READY
+// 10. START WHEN HTML IS READY
 // ============================================================
 
 document.addEventListener(

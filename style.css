@@ -4,14 +4,12 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-family: Arial, sans-serif;
     background: #f5f7f2;
     color: #333;
     line-height: 1.6;
 }
-
 
 /* =====================================
    HEADER
@@ -34,7 +32,6 @@ header {
 
     min-height: 70px;
 }
-
 
 /* =====================================
    LOGO
@@ -66,7 +63,6 @@ header {
     white-space: nowrap;
 }
 
-
 /* =====================================
    NAVIGATION
 ===================================== */
@@ -96,7 +92,6 @@ header nav a:hover {
     color: #2e7d32;
 }
 
-
 /* =====================================
    DATABASE STATUS
 ===================================== */
@@ -112,7 +107,6 @@ header nav a:hover {
 
     border-bottom: 1px solid #dce8d6;
 }
-
 
 /* =====================================
    HERO
@@ -153,7 +147,6 @@ header nav a:hover {
     margin-bottom: 30px;
 }
 
-
 /* =====================================
    BUTTONS
 ===================================== */
@@ -184,7 +177,6 @@ button:hover {
     transform: translateY(-1px);
 }
 
-
 /* =====================================
    SECTIONS
 ===================================== */
@@ -202,7 +194,6 @@ button:hover {
 
     margin-bottom: 15px;
 }
-
 
 /* =====================================
    USER FLOW
@@ -254,7 +245,6 @@ button:hover {
     color: #2e7d32;
 }
 
-
 /* =====================================
    ASSET CARDS
 ===================================== */
@@ -293,7 +283,6 @@ button:hover {
 .asset-card p {
     margin-bottom: 20px;
 }
-
 
 /* =====================================
    DATABASE CARDS
@@ -340,7 +329,6 @@ button:hover {
     margin: 7px 0;
 }
 
-
 /* =====================================
    BUSINESS INSIGHTS
 ===================================== */
@@ -348,7 +336,6 @@ button:hover {
 #business-insights {
     background: #f5f7f2;
 }
-
 
 /* =====================================
    BUSINESS METRIC CARDS
@@ -388,7 +375,6 @@ button:hover {
     margin: 0;
 }
 
-
 /* =====================================
    BUSINESS ANALYSIS ROWS
 ===================================== */
@@ -417,7 +403,6 @@ button:hover {
     color: #263238;
 }
 
-
 /* =====================================
    KEY BUSINESS FINDINGS
 ===================================== */
@@ -429,7 +414,6 @@ button:hover {
     font-weight: bold;
 }
 
-
 /* =====================================
    TOP BAKERIES
 ===================================== */
@@ -438,7 +422,6 @@ button:hover {
     margin-top: 15px;
 }
 
-
 /* =====================================
    FOOD CATEGORY ANALYSIS
 ===================================== */
@@ -446,7 +429,6 @@ button:hover {
 #deeper-category-container {
     margin-top: 15px;
 }
-
 
 /* =====================================
    HIGH WASTE PRODUCTS
@@ -460,7 +442,6 @@ button:hover {
     border-left-color: #c62828;
 }
 
-
 /* =====================================
    HIGH SURPLUS PRODUCTS
 ===================================== */
@@ -473,7 +454,6 @@ button:hover {
     border-left-color: #2e7d32;
 }
 
-
 /* =====================================
    DONATION AVAILABILITY
 ===================================== */
@@ -485,7 +465,6 @@ button:hover {
 #donation-availability-container .analysis-row {
     border-left-color: #1565c0;
 }
-
 
 /* =====================================
    BUSINESS INSIGHTS SPACING
@@ -503,6 +482,61 @@ button:hover {
     color: #555;
 }
 
+/* =====================================
+   DATABASE TABLES
+===================================== */
+
+.table-container {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+    background: white;
+}
+
+.data-table th {
+    padding: 14px 16px;
+    text-align: left;
+    background: #2e7d32;
+    color: white;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #e1e6df;
+    color: #37474f;
+    white-space: nowrap;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: #f8faf7;
+}
+
+.data-table tbody tr:hover {
+    background: #edf5eb;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.analysis-table {
+    min-width: 550px;
+}
 
 /* =====================================
    FOOTER
@@ -517,7 +551,6 @@ footer {
 
     color: white;
 }
-
 
 /* =====================================
    MOBILE
@@ -550,7 +583,6 @@ footer {
     }
 
 }
-
 
 /* =====================================
    SMALL MOBILE
@@ -614,60 +646,4 @@ footer {
         max-width: 280px;
     }
 
-}
-
-/* =====================================
-   DATABASE TABLES
-===================================== */
-
-.table-container {
-    width: 100%;
-    margin-top: 30px;
-}
-
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 650px;
-    background: white;
-}
-
-.data-table th {
-    padding: 14px 16px;
-    text-align: left;
-    background: #2e7d32;
-    color: white;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.data-table td {
-    padding: 13px 16px;
-    border-bottom: 1px solid #e1e6df;
-    color: #37474f;
-    white-space: nowrap;
-}
-
-.data-table tbody tr:nth-child(even) {
-    background: #f8faf7;
-}
-
-.data-table tbody tr:hover {
-    background: #edf5eb;
-}
-
-.data-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.analysis-table {
-    min-width: 550px;
 }

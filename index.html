@@ -2,28 +2,15 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Plate 2 Plate | Food Waste Reduction</title>
 
-    <title>
-        Plate 2 Plate | Food Waste Reduction
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-
 
     <!-- =====================================
          NAVIGATION
@@ -44,7 +31,6 @@
             </span>
 
         </div>
-
 
         <nav>
 
@@ -84,6 +70,10 @@
                 Donations
             </a>
 
+            <a href="#customers">
+                Customers
+            </a>
+
         </nav>
 
     </header>
@@ -94,9 +84,7 @@
     ====================================== -->
 
     <div id="connection-status">
-
         Checking database connection...
-
     </div>
 
 
@@ -104,10 +92,7 @@
          HOME
     ====================================== -->
 
-    <section
-        id="home"
-        class="hero"
-    >
+    <section id="home" class="hero">
 
         <div class="hero-content">
 
@@ -115,22 +100,17 @@
                 Plate 2 Plate
             </h1>
 
-
             <h2>
                 Reducing Food Waste.
                 Feeding Communities.
             </h2>
 
-
             <p>
-
                 A food redistribution platform
                 connecting bakeries, surplus food,
                 and NGOs to reduce food waste and
                 support communities in need.
-
             </p>
-
 
             <div class="buttons">
 
@@ -139,7 +119,6 @@
                 >
                     View Surplus Food
                 </button>
-
 
                 <button
                     onclick="showSection('ngos')"
@@ -167,14 +146,10 @@
             🔄 Plate 2 Plate User Flow
         </h2>
 
-
         <p>
-
             The complete user flow of the
             Plate 2 Plate platform.
-
         </p>
-
 
         <div class="asset-card">
 
@@ -201,20 +176,16 @@
             🗂️ Plate 2 Plate ER Diagram
         </h2>
 
-
         <p>
-
             Entity Relationship Diagram showing
             the database structure of the
             Plate 2 Plate project.
-
         </p>
-
 
         <div class="asset-card">
 
             <img
-                src="assets/Plate%202%20Plate%20ER%20Diagram.png"
+                src="assets/Plate%202%20Plate%20ER%20Diagram_final.png"
                 alt="Plate 2 Plate ER Diagram"
             >
 
@@ -236,21 +207,16 @@
             📈 Food Surplus Visualization
         </h2>
 
-
         <p>
-
             Visualization generated from the
             Plate 2 Plate food waste data.
-
         </p>
-
 
         <div class="asset-card">
 
             <h3>
                 Total Food Surplus by Category
             </h3>
-
 
             <img
                 src="assets/food_surplus_chart.png"
@@ -275,13 +241,10 @@
             📊 Business Insights & Analysis
         </h2>
 
-
         <p>
-
             Business analysis generated directly
             from the Plate 2 Plate food waste,
             surplus and donation database.
-
         </p>
 
 
@@ -290,7 +253,6 @@
         ================================== -->
 
         <div class="cards">
-
 
             <div class="card insight-card">
 
@@ -343,7 +305,6 @@
 
             </div>
 
-
         </div>
 
 
@@ -357,7 +318,6 @@
                 📌 Key Business Findings
             </h3>
 
-
             <p>
 
                 Highest-surplus food category:
@@ -367,7 +327,6 @@
                 </strong>
 
             </p>
-
 
             <p>
 
@@ -392,11 +351,8 @@
                 🏪 Top Bakeries by Surplus
             </h3>
 
-
             <div id="top-bakeries-container">
-
                 Loading...
-
             </div>
 
         </div>
@@ -412,11 +368,8 @@
                 🍞 Food Category Analysis
             </h3>
 
-
             <div id="deeper-category-container">
-
                 Loading...
-
             </div>
 
         </div>
@@ -432,11 +385,8 @@
                 ⚠️ High-Waste Products
             </h3>
 
-
             <div id="high-waste-container">
-
                 Loading...
-
             </div>
 
         </div>
@@ -452,15 +402,11 @@
                 📦 High-Surplus Products
             </h3>
 
-
             <div id="high-surplus-container">
-
                 Loading...
-
             </div>
 
         </div>
-
 
     </section>
 
@@ -478,14 +424,10 @@
             🍞 Available Surplus Food
         </h2>
 
-
         <p>
-
             Food surplus currently available
             from participating bakeries.
-
         </p>
-
 
         <div
             id="surplus-container"
@@ -514,14 +456,10 @@
             🏪 Bakeries
         </h2>
 
-
         <p>
-
             Bakeries participating in the
             Plate 2 Plate platform.
-
         </p>
-
 
         <div
             id="bakery-container"
@@ -550,14 +488,10 @@
             🤝 NGOs
         </h2>
 
-
         <p>
-
             NGOs receiving and redistributing
             surplus food.
-
         </p>
-
 
         <div
             id="ngo-container"
@@ -586,14 +520,10 @@
             🎁 Donations
         </h2>
 
-
         <p>
-
             Track food donations and
             pickup status.
-
         </p>
-
 
         <div
             id="donation-container"
@@ -610,17 +540,46 @@
 
 
     <!-- =====================================
+         CUSTOMERS
+    ====================================== -->
+
+    <section
+        id="customers"
+        class="section"
+    >
+
+        <h2>
+            👥 Customers
+        </h2>
+
+        <p>
+            Customers receiving surplus food through
+            the Plate 2 Plate platform.
+        </p>
+
+        <div
+            id="customer-container"
+            class="cards"
+        >
+
+            <p>
+                Loading customers...
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
          FOOTER
     ====================================== -->
 
     <footer>
 
         <p>
-
             © 2026 Plate 2 Plate |
-
             Food Waste Reduction Initiative
-
         </p>
 
     </footer>
@@ -631,7 +590,6 @@
     ====================================== -->
 
     <script src="script.js"></script>
-
 
 </body>
 
