@@ -2,11 +2,11 @@
 
 ### Business Data Management – Assignment 1
 
-**Plate 2 Plate** is a database-driven food surplus management and redistribution platform designed to help organize, analyze, and redistribute surplus food from bakeries to NGOs.
+**Plate 2 Plate** is a database-driven food surplus management and redistribution platform designed to organize, analyze, and redistribute surplus food from bakeries to NGOs.
 
-The project integrates **PostgreSQL, Supabase, SQL analytics, Python data analysis, data visualization, and a web-based frontend** into one Business Data Management solution.
+The project combines **PostgreSQL, Supabase, SQL analytics, Python/Pandas, FastAPI, HTML, CSS, and JavaScript** into one Business Data Management solution.
 
-> **Note:** The current repository focuses on database management, analytics, visualization, and frontend database integration. AI/ML-based prediction is considered a future enhancement rather than a currently implemented feature.
+> **Current implementation:** The website is served through a FastAPI backend. FastAPI connects to the Supabase-hosted PostgreSQL database using the existing `.env` connection string, while the frontend consumes API endpoints for live database records and business analysis.
 
 ---
 
@@ -27,7 +27,7 @@ The project integrates **PostgreSQL, Supabase, SQL analytics, Python data analys
 
 Food businesses such as bakeries may have surplus food that remains unsold at the end of the day. At the same time, NGOs and community organizations may require food for redistribution.
 
-Plate 2 Plate provides a structured database and web interface to manage and analyze information related to:
+Plate 2 Plate provides a structured database and web interface to manage and analyze:
 
 - Food products
 - Food categories
@@ -38,7 +38,7 @@ Plate 2 Plate provides a structured database and web interface to manage and ana
 - Donations
 - Donation and pickup status
 
-The system uses **PostgreSQL through Supabase** as the database layer, **Python** for data preprocessing and analysis, and **HTML, CSS, and JavaScript** for the frontend.
+The system uses **PostgreSQL through Supabase** as the database layer, **Python/Pandas** for analysis, **FastAPI** for backend API integration, and **HTML, CSS, and JavaScript** for the frontend.
 
 ---
 
@@ -52,7 +52,7 @@ Businesses may need better visibility into:
 - Food waste levels
 - Product-level waste
 - Category-level surplus
-- Bakery-level performance
+- Bakery-level surplus
 - Donation availability
 - Donation quantities
 - NGO distribution
@@ -73,11 +73,12 @@ The main objectives are to:
 5. Connect Python with the PostgreSQL database.
 6. Perform data preprocessing and feature engineering.
 7. Generate business-oriented analytical results.
-8. Create visualizations for food surplus and waste analysis.
+8. Create visualizations for food surplus analysis.
 9. Develop a web interface for viewing database information.
-10. Connect the frontend to Supabase.
-11. Apply Row Level Security (RLS) for database access.
-12. Maintain and document the project using GitHub.
+10. Connect the frontend to a FastAPI backend.
+11. Display live business insights generated from the database.
+12. Apply Row Level Security where required.
+13. Maintain and document the project using GitHub.
 
 ---
 
@@ -87,6 +88,8 @@ The main objectives are to:
 |---|---|
 | Database | PostgreSQL |
 | Database Platform | Supabase |
+| Backend API | FastAPI |
+| ASGI Server | Uvicorn |
 | Frontend | HTML5 |
 | Styling | CSS3 |
 | Client-side Programming | JavaScript |
@@ -100,30 +103,34 @@ The main objectives are to:
 
 # 🏗️ 5. System Architecture
 
+The current application follows this architecture:
+
 ```text
-                         USER
-                           │
-                           ▼
-                  HTML / CSS / JavaScript
-                           │
-                           ▼
-                Supabase JavaScript Client
-                           │
-                           ▼
-                       SUPABASE
-                           │
-                           ▼
-                     PostgreSQL
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-          ▼                ▼                ▼
-     FOOD WASTE        BAKERIES           NGOs
-          │                                 │
-          │                                 │
-          └──────────────┬──────────────────┘
-                         ▼
-                     DONATIONS
+                    USER
+                      │
+                      ▼
+              HTML / CSS / JavaScript
+                      │
+                      ▼
+                 FastAPI API
+                      │
+             ┌────────┴────────┐
+             │                 │
+             ▼                 ▼
+       Database APIs      Business Analysis
+             │                 │
+             └────────┬────────┘
+                      ▼
+             Supabase PostgreSQL
+                      │
+          ┌───────────┼───────────┐
+          │           │           │
+          ▼           ▼           ▼
+     FOOD WASTE    BAKERIES      NGOs
+          │                       │
+          └──────────┬────────────┘
+                     ▼
+                 DONATIONS
 ```
 
 ### Overall Data and Analysis Workflow
@@ -143,9 +150,11 @@ SQL Analysis
        ↓
 Python Analysis
        ↓
-Visualization
+FastAPI Backend
        ↓
-Web Application
+JavaScript Frontend
+       ↓
+Business Insights
        ↓
 User Interface
 ```
@@ -217,13 +226,13 @@ It contains information such as:
 
 Food categories classify products and support category-level analysis.
 
-Category analysis is used for:
+Category analysis supports:
 
 - Product counts
-- Average waste
 - Total surplus
-- Average price
-- Category ranking
+- Total waste
+- Average sales
+- Category comparison
 
 ---
 
@@ -278,7 +287,7 @@ The main logical relationships represented by the project are:
                       NGOs
 ```
 
-The ER diagram provides the visual representation of the database entities and their relationships.
+The ER diagram provides the visual representation of the database entities and relationships.
 
 ## ER Diagram
 
@@ -290,7 +299,7 @@ The ER diagram provides the visual representation of the database entities and t
 
 # 🔄 8. System User Flow
 
-The system user flow shows how users interact with the Plate 2 Plate interface and how the frontend connects to the database.
+The system user flow shows how users interact with the Plate 2 Plate interface and how the frontend communicates with the backend and database.
 
 ![Plate 2 Plate User Flow](assets/Plate%202%20Plate%20%E2%80%94%20System%20User%20Flow.png)
 
@@ -303,17 +312,18 @@ The project contains a browser-based frontend developed using:
 - HTML
 - CSS
 - JavaScript
-- Supabase JavaScript Client
 
-The interface contains the following sections:
+The frontend is served by FastAPI and communicates with the backend through API endpoints.
+
+The website contains:
 
 ### 🏠 Home
 
-Introduces the Plate 2 Plate project and provides navigation.
+Introduces Plate 2 Plate and provides navigation.
 
 ### 🔄 User Flow
 
-Displays the system user-flow diagram.
+Displays the complete system user-flow diagram.
 
 ### 🗂️ ER Diagram
 
@@ -321,15 +331,19 @@ Displays the database Entity Relationship Diagram.
 
 ### 📈 Visualization
 
-Displays analytical food surplus information.
+Displays food surplus visualization.
+
+### 📊 Business Insights & Analysis
+
+Displays live business analysis retrieved from the FastAPI backend.
 
 ### 🍞 Surplus Food
 
-Displays surplus-food records retrieved from the `food_waste` table.
+Displays surplus-food records retrieved from the database.
 
 ### 🏪 Bakeries
 
-Displays bakery information retrieved from the database.
+Displays bakery information.
 
 ### 🤝 NGOs
 
@@ -339,63 +353,214 @@ Displays NGO information.
 
 Displays donation records and pickup status.
 
----
-
-# 🔌 10. Supabase Integration
-
-The frontend uses the Supabase JavaScript client to retrieve information from the PostgreSQL database.
-
-The current frontend retrieves data from:
-
-```text
-food_waste
-bakeries
-ngos
-donations
-```
-
-The JavaScript application provides functionality for:
-
-- Testing database connectivity
-- Loading surplus food
-- Loading bakery records
-- Loading NGO records
-- Loading donation records
-- Loading dashboard statistics
-- Displaying database connection status
-
-This allows the website to display information stored in the Supabase database.
+The header also includes the **Plate 2 Plate logo and company name**.
 
 ---
 
-# 🔐 11. Row Level Security
+# 🔌 10. FastAPI and Database Integration
 
-Row Level Security (RLS) is configured for the main frontend-accessed tables:
-
-```text
-food_waste
-bakeries
-ngos
-donations
-```
-
-The current configuration provides the read access required by the frontend.
-
-The RLS configuration is available at:
+The backend is implemented in:
 
 ```text
-supabase/database/enable_rls.sql
+backend/app.py
 ```
 
-### Security Note
+FastAPI loads the existing database connection string from the project-root `.env` file:
 
-The frontend may use a Supabase publishable/anonymous key as intended by Supabase's client-side architecture. **Database passwords, service-role keys, private API keys, and other secrets must never be placed in frontend code or committed to GitHub.**
+```text
+DATABASE_URL=your_supabase_postgresql_connection_string
+```
 
-The `.gitignore` file excludes `.env` files from version control.
+The backend uses `psycopg2` to connect to the Supabase-hosted PostgreSQL database.
+
+### Main API Endpoints
+
+| Endpoint | Purpose |
+|---|---|
+| `/api` | API status |
+| `/api/connection` | Test database connection |
+| `/api/surplus` | Retrieve surplus food |
+| `/api/bakeries` | Retrieve bakery records |
+| `/api/ngos` | Retrieve NGO records |
+| `/api/donations` | Retrieve donation records |
+| `/api/business-analysis` | Generate business analysis |
+
+The frontend JavaScript calls these endpoints and displays the returned information in the website.
 
 ---
 
-# 📊 12. SQL Analysis
+# 📊 11. Business Insights & Analysis
+
+The Business Insights section is generated from live database data through:
+
+```text
+Supabase PostgreSQL
+        ↓
+FastAPI
+        ↓
+/api/business-analysis
+        ↓
+script.js
+        ↓
+Business Insights section
+```
+
+The analysis includes:
+
+## 11.1 Total Surplus
+
+Total daily surplus quantity available across food-waste records.
+
+## 11.2 Total Waste
+
+Total average daily waste across the food-waste records.
+
+## 11.3 Total Donated
+
+Total quantity recorded in the donations table.
+
+## 11.4 Donation-to-Surplus Ratio
+
+Calculated as:
+
+```text
+(Total Donated / Total Surplus) × 100
+```
+
+## 11.5 Highest Surplus Category
+
+Identifies the food category with the highest total daily surplus.
+
+## 11.6 Highest Waste Category
+
+Identifies the food category with the highest average daily waste.
+
+## 11.7 Top Bakeries by Surplus
+
+Ranks bakery IDs according to total daily surplus.
+
+## 11.8 Food Category Analysis
+
+Provides category-level:
+
+- Total surplus
+- Total waste
+- Average daily sales
+
+## 11.9 High-Waste Products
+
+Identifies products with comparatively high average daily waste.
+
+## 11.10 High-Surplus Products
+
+Identifies products with comparatively high daily surplus.
+
+## 11.11 Donation Availability
+
+Compares food records based on whether donation is available and summarizes:
+
+- Number of products
+- Total surplus
+- Total waste
+
+---
+
+# 📊 12. Data Visualization
+
+The project includes visual analysis of food surplus.
+
+## Food Surplus by Category
+
+![Food Surplus Visualization](assets/food_surplus_chart.png)
+
+The visualization provides a category-level view of surplus food quantities.
+
+Additional analytical outputs are available in the `results/` directory.
+
+---
+
+# 🐍 13. Python Data Analysis
+
+Python is used for:
+
+1. Database exploration
+2. Data loading
+3. Missing-value checking
+4. Duplicate checking
+5. Data cleaning
+6. Data preprocessing
+7. Feature engineering
+8. Business analysis
+9. Visualization
+
+Pandas is used to process and aggregate database records for analysis.
+
+---
+
+# ⚙️ 14. Data Preprocessing
+
+The preprocessing stage includes:
+
+- Loading food-waste data
+- Checking dataset dimensions
+- Checking duplicate records
+- Checking missing values
+- Converting numerical fields
+- Checking negative values
+- Cleaning the dataset
+- Preparing data for analysis
+
+---
+
+# 🧮 15. Feature Engineering
+
+The project derives analytical features from the food-waste dataset.
+
+Examples include:
+
+### Waste Rate
+
+Measures waste relative to available food.
+
+### Surplus Rate
+
+Measures surplus relative to available food.
+
+### Waste to Surplus Ratio
+
+Compares waste quantity with surplus quantity.
+
+### Sales Utilization Rate
+
+Measures sales relative to available food.
+
+### Donation Available Flag
+
+Represents donation availability as an analytical indicator.
+
+### Waste Level
+
+Categorizes waste into:
+
+```text
+Low
+Medium
+High
+```
+
+### Surplus Level
+
+Categorizes surplus into:
+
+```text
+Low
+Medium
+High
+```
+
+---
+
+# 📈 16. SQL Analysis
 
 The project demonstrates SQL concepts relevant to Business Data Management.
 
@@ -431,131 +596,28 @@ The project demonstrates SQL concepts relevant to Business Data Management.
 
 ---
 
-# 📈 13. Business Analysis
+# 🔐 17. Row Level Security
 
-The SQL and Python analysis supports business questions such as:
-
-### Bakery Analysis
-
-- Which bakeries have higher surplus?
-- What is the total quantity donated by bakery?
-- What is the waste level associated with bakery food records?
-- Which bakeries have high surplus quantities?
-
-### NGO Analysis
-
-- How much food does each NGO receive?
-- How many donations does each NGO receive?
-- Which NGOs receive quantities above a defined threshold?
-
-### Donation Analysis
-
-- What is the total quantity donated?
-- What is the distribution of pickup status?
-- Which bakeries contribute donations?
-- Which NGOs receive donations?
-
-### Food Waste Analysis
-
-- What is the food waste by category?
-- What is the food surplus by category?
-- Which products have higher waste?
-- Which products have higher surplus?
-- How does waste vary across locations?
-
----
-
-# 🐍 14. Python Data Analysis
-
-Python is used for database exploration, preprocessing, feature engineering, business analysis, and visualization.
-
-The analytical workflow includes:
-
-1. Database connection
-2. Data loading
-3. Table exploration
-4. Missing-value checking
-5. Duplicate checking
-6. Data cleaning
-7. Data preprocessing
-8. Feature engineering
-9. Business analysis
-10. Visualization
-
----
-
-# ⚙️ 15. Data Preprocessing
-
-The preprocessing stage includes:
-
-- Loading food-waste data
-- Checking dataset dimensions
-- Checking duplicate records
-- Checking missing values
-- Converting numerical fields
-- Checking negative values
-- Cleaning the dataset
-- Saving processed data for further analysis
-
----
-
-# 🧮 16. Feature Engineering
-
-The project derives additional analytical features from the food-waste dataset.
-
-### Waste Rate
-
-Measures waste relative to available food.
-
-### Surplus Rate
-
-Measures surplus relative to available food.
-
-### Waste to Surplus Ratio
-
-Compares waste quantity with surplus quantity.
-
-### Sales Utilization Rate
-
-Measures the proportion of available food represented by sales.
-
-### Donation Available Flag
-
-Converts donation availability into an analytical indicator.
-
-### Waste Level
-
-Categorizes waste into:
+Row Level Security (RLS) is configured for the main frontend-accessed tables where applicable:
 
 ```text
-Low
-Medium
-High
+food_waste
+bakeries
+ngos
+donations
 ```
 
-### Surplus Level
-
-Categorizes surplus into:
+The RLS configuration is available under:
 
 ```text
-Low
-Medium
-High
+supabase/database/
 ```
 
----
+### Security Note
 
-# 📈 17. Data Visualization
+Database passwords, service-role keys, private API keys, and other secrets must never be placed in frontend code or committed to GitHub.
 
-The project includes visual analysis of food surplus.
-
-## Food Surplus by Category
-
-![Food Surplus Visualization](assets/food_surplus_chart.png)
-
-The visualization provides a category-level view of surplus food quantities.
-
-Additional visualization outputs are available in the `results/` directory.
+The existing `.env` file is used for the database connection and should remain excluded from version control.
 
 ---
 
@@ -565,12 +627,18 @@ Additional visualization outputs are available in the `results/` directory.
 Assignment1_BDM/
 │
 ├── assets/
-│   ├── Plate 2 Plate logo.png
+│   ├── food_surplus_chart.png
 │   ├── Plate 2 Plate — System User Flow.png
 │   ├── Plate 2 Plate ER Diagram.png
-│   └── food_surplus_chart.png
+│   └── Plate 2 Plate logo.png
+│
+├── backend/
+│   ├── app.py
+│   └── __pycache__/
 │
 ├── results/
+│   ├── eda/
+│   ├── sql_results/
 │   ├── eda.py
 │   ├── results.py
 │   ├── visualization.py
@@ -584,24 +652,17 @@ Assignment1_BDM/
 │   ├── joins.sql
 │   ├── ngos.sql
 │   ├── plate2plate_queries.sql
-│   │
 │   └── database/
-│       └── enable_rls.sql
-│
-├── 1_explore_tables.py
-├── business_analysis.py
-├── deeper_analysis.py
-├── feature_engineering.py
-├── joins.py
-├── preprocessing.py
-├── test_connection.py
 │
 ├── index.html
 ├── script.js
 ├── style.css
+├── .env
 ├── .gitignore
 └── README.md
 ```
+
+> The `.env` file is local configuration and must not be committed to GitHub.
 
 ---
 
@@ -611,21 +672,19 @@ Assignment1_BDM/
 |---|---|
 | `index.html` | Main website interface |
 | `style.css` | Website styling |
-| `script.js` | Frontend logic and Supabase integration |
-| `preprocessing.py` | Data cleaning and preprocessing |
-| `feature_engineering.py` | Derived analytical features |
-| `business_analysis.py` | Business-oriented analysis |
-| `deeper_analysis.py` | Additional analysis |
-| `joins.py` | SQL JOIN analysis |
-| `test_connection.py` | Database connection testing |
-| `supabase/food_waste.sql` | Food waste database structure/data |
+| `script.js` | Frontend logic and FastAPI API integration |
+| `backend/app.py` | FastAPI backend and database integration |
+| `results/eda.py` | Exploratory analysis |
+| `results/results.py` | Analytical result generation |
+| `results/visualization.py` | Visualization generation |
+| `supabase/food_waste.sql` | Food-waste database structure/data |
 | `supabase/bakeries.sql` | Bakery database structure/data |
 | `supabase/ngos.sql` | NGO database structure/data |
 | `supabase/donations.sql` | Donation database structure/data |
-| `supabase/food_category.sql` | Category-level SQL analysis |
+| `supabase/food_category.sql` | Category SQL analysis |
 | `supabase/joins.sql` | JOIN-based SQL analysis |
 | `supabase/plate2plate_queries.sql` | Business analysis queries |
-| `supabase/database/enable_rls.sql` | Row Level Security configuration |
+| `supabase/database/` | Database configuration scripts |
 
 ---
 
@@ -646,21 +705,21 @@ python -m venv .venv
 
 ### Windows
 
-```bash
+```powershell
 .venv\Scripts\activate
 ```
 
 ## Step 3 – Install Dependencies
 
 ```bash
-pip install psycopg2-binary pandas matplotlib python-dotenv
+pip install fastapi uvicorn psycopg2-binary pandas matplotlib python-dotenv
 ```
 
 ---
 
 # 🔑 21. Environment Variables
 
-Create a `.env` file in the project root for database credentials used by Python.
+The project uses the existing `.env` file in the project root.
 
 Example:
 
@@ -668,114 +727,118 @@ Example:
 DATABASE_URL=your_supabase_postgresql_connection_string
 ```
 
-Do not commit the `.env` file to GitHub.
+Do **not** commit the `.env` file to GitHub.
 
-The repository `.gitignore` excludes:
+The repository should keep sensitive configuration excluded through `.gitignore`.
+
+---
+
+# 🌐 22. Running the Website
+
+From the project root, run:
+
+```powershell
+python -m py_compile backend/app.py
+```
+
+If there is no output, start FastAPI:
+
+```powershell
+uvicorn backend.app:app --reload
+```
+
+Then open:
 
 ```text
-.env
-.venv/
-__pycache__/
-*.csv
+http://127.0.0.1:8000/
 ```
 
----
+### Test the API
 
-# 🐍 22. Running the Python Analysis
-
-Example:
-
-```bash
-python 1_explore_tables.py
-```
-
-Other analysis scripts include:
-
-```bash
-python preprocessing.py
-python feature_engineering.py
-python business_analysis.py
-python deeper_analysis.py
-python joins.py
-```
-
----
-
-# 🌐 23. Running the Website
-
-The frontend can be opened using a local development server.
-
-For example, using VS Code Live Server:
+Database connection:
 
 ```text
-index.html
+http://127.0.0.1:8000/api/connection
 ```
 
-The frontend loads the Supabase JavaScript client and retrieves data from the configured Supabase database.
-
----
-
-# 🔄 24. End-to-End Project Workflow
+Business analysis:
 
 ```text
-              DATA SOURCES
-                   │
-                   ▼
-          PostgreSQL / Supabase
-                   │
-                   ▼
-            Data Exploration
-                   │
-                   ▼
-          Data Preprocessing
-                   │
-                   ▼
-          Feature Engineering
-                   │
-                   ▼
-             SQL Analysis
-                   │
-                   ▼
-           Python Analysis
-                   │
-                   ▼
-             Visualization
-                   │
-                   ▼
-            Web Application
-                   │
-                   ▼
-              User Interface
+http://127.0.0.1:8000/api/business-analysis
+```
+
+The website retrieves live data through the FastAPI backend.
+
+---
+
+# 🔄 23. End-to-End Project Workflow
+
+```text
+              SUPABASE POSTGRESQL
+                       │
+                       ▼
+                 FastAPI Backend
+                       │
+        ┌──────────────┼──────────────┐
+        ▼              ▼              ▼
+     Surplus        Bakeries         NGOs
+        │              │              │
+        └──────────────┼──────────────┘
+                       ▼
+                   Donations
+                       │
+                       ▼
+              Business Analysis
+                       │
+                       ▼
+                  JavaScript
+                       │
+                       ▼
+                  index.html
+                       │
+                       ▼
+                 User Interface
 ```
 
 ---
 
-# 📌 25. Key Project Outcomes
+# 📌 24. Key Project Outcomes
 
 ### Database Management
+
 A relational PostgreSQL database is used to organize food waste, surplus, bakery, NGO, and donation information.
 
 ### SQL Analytics
+
 The project demonstrates aggregation, joins, grouping, filtering, subqueries, CTEs, and window functions.
 
 ### Python Analytics
-Python is used for preprocessing, feature engineering, business analysis, and visualization.
 
-### Web Integration
-The frontend retrieves and displays database information through Supabase.
+Python and Pandas are used for preprocessing, feature engineering, business analysis, and visualization.
+
+### FastAPI Integration
+
+FastAPI provides the backend layer connecting the website with the Supabase PostgreSQL database.
+
+### Business Insights
+
+The website displays live metrics and business analysis covering surplus, waste, donations, categories, bakeries, products, and donation availability.
 
 ### Data Visualization
+
 Food surplus information is represented visually to support analysis.
 
 ### Security
-Row Level Security is configured for the tables accessed by the frontend.
+
+Database credentials remain in the local `.env` configuration and should not be committed to GitHub.
 
 ### Version Control
+
 The project is maintained using Git and GitHub.
 
 ---
 
-# 🔮 26. Future Enhancements
+# 🔮 25. Future Enhancements
 
 The current system can be extended with:
 
@@ -794,7 +857,7 @@ The current system can be extended with:
 
 ---
 
-# 👥 27. Team Members
+# 👥 26. Team Members
 
 ### Plate2Plate – Group 2
 
@@ -809,7 +872,7 @@ CB.BU.P2ASB24193
 
 ---
 
-# 🔗 28. Project Repository
+# 🔗 27. Project Repository
 
 GitHub Repository:
 
@@ -821,4 +884,4 @@ https://github.com/Varshini-Balaji2021/Assignment1_BDM
 
 ### Reducing Food Waste. Feeding Communities.
 
-**Plate 2 Plate** integrates **relational database design, SQL analytics, Python data analysis, visualization, Supabase, and a web-based interface** into a Business Data Management project focused on food surplus and redistribution.
+**Plate 2 Plate** integrates **relational database design, SQL analytics, Python data analysis, FastAPI, visualization, Supabase, and a web-based interface** into a Business Data Management project focused on food surplus and redistribution.
